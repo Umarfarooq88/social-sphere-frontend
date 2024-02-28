@@ -34,7 +34,10 @@ const SignInForm = () => {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col justify-center items-center space-y-2"
+      >
         <FormField
           control={form.control}
           name="email"
