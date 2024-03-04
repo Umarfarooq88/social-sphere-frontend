@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { ModeToggle } from "./ModeToggle";
 import Avatar from "./Avatar";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const pathName = usePathname();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -30,24 +31,36 @@ const Navbar = () => {
             <ul className="flex space-x-4 lg:text-xl">
               <li>
                 <a
-                  href="#"
-                  className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
+                  href="/publishing"
+                  className={
+                    pathName === "/publishing"
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
+                  }
                 >
                   Publishing
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
-                  className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
+                  href="/analytics"
+                  className={
+                    pathName === "/analytics"
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
+                  }
                 >
                   Analytics
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
-                  className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
+                  href="/engagement"
+                  className={
+                    pathName === "/engagement"
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
+                  }
                 >
                   Engagement
                 </a>
