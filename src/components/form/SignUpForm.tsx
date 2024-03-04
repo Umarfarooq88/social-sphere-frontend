@@ -44,12 +44,13 @@ const SignUpForm = () => {
   });
 
   // Form submit handler
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>, e) => {
     if (values.password === values.confirmPassword) {
       try {
+        e.preventDefault();
         const url: string = process.env.NEXT_PUBLIC_USER_URL || "";
         const data = JSON.stringify({
-          "email-id": values.email,
+          emailID: values.email,
           password: values.password,
         });
         const config = {
@@ -58,12 +59,12 @@ const SignUpForm = () => {
           },
         };
         const response = await axios.post(url, data, config);
-        console.log(response.data);
+        console.log(response?.data);
       } catch (error) {
         console.error(error);
       }
     }
-    console.log(values);
+    // console.log(values);
   };
 
   return (
