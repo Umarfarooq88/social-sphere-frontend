@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 // Define form schema
 const formSchema = z
@@ -34,6 +35,7 @@ const formSchema = z
   });
 
 const SignUpForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,11 +46,11 @@ const SignUpForm = () => {
   });
 
   // Form submit handler
-  const onSubmit = async (values: z.infer<typeof formSchema>, e) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>, e: Event) => {
+    e.preventDefault();
     if (values.password === values.confirmPassword) {
       try {
-        e.preventDefault();
-        const url: string = process.env.NEXT_PUBLIC_USER_URL || "";
+        const url: string = process.env.NEXT_PUBLIC_USER_URL + "register" || "";
         const data = JSON.stringify({
           emailID: values.email,
           password: values.password,
@@ -58,13 +60,13 @@ const SignUpForm = () => {
             "Content-Type": "application/json",
           },
         };
-        const response = await axios.post(url, data, config);
-        console.log(response?.data);
+        await axios.post(url, data, config).then((response) => {
+          if (response.status === 201) router.push("/sign-in");
+        });
       } catch (error) {
         console.error(error);
       }
     }
-    // console.log(values);
   };
 
   return (

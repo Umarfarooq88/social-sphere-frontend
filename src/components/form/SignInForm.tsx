@@ -13,6 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Terminal } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 const formSchema = z.object({
   email: z.string().email(),
   password: z
@@ -21,6 +26,10 @@ const formSchema = z.object({
     .max(20, "Password must be less than 100 characters"),
 });
 const SignInForm = () => {
+  const router = useRouter();
+  const [error, setError] = React.useState<string | null>(null);
+  const [success, setSuccess] = React.useState<string | null>(null);
+  const [submitting, setSubmitting] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -29,14 +38,63 @@ const SignInForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>, e: Event) {
+    e.preventDefault();
+    setSuccess(null);
+    setError(null);
+    setSubmitting(true);
+    try {
+      const url: string = process.env.NEXT_PUBLIC_USER_URL + "login" || "";
+      const data = JSON.stringify({
+        emailID: values.email,
+        password: values.password,
+      });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await axios
+        .post(url, data, config)
+        .then((response) => {
+          if (response.status === 200)
+            setSuccess("You have successfully logged in");
+          setTimeout(() => {
+            router.push("/");
+          }, 2000);
+        })
+        .catch((err) => {
+          setError("Invalid credentials, Retry with correct credentials");
+        });
+    } catch (error) {
+      console.error(error);
+    }
+    setSubmitting(false);
   }
+
   return (
     <Form {...form}>
+      {
+        <div className="p-4">
+          {error && (
+            <Alert variant="destructive">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>Login Failed</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          {success && (
+            <Alert className="border border-green-500">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>Success!</AlertTitle>
+              <AlertDescription>{success}</AlertDescription>
+            </Alert>
+          )}
+        </div>
+      }
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col justify-center items-center space-y-2"
+        className="flex flex-col gap-2 items-center "
       >
         <FormField
           control={form.control}
@@ -68,8 +126,18 @@ const SignInForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={submitting} className="w-full">
+          Sign In
+        </Button>
       </form>
+      <div className="p-2">
+        <p className="text-center text-sm">
+          {"Don't have an account? "}
+          <a href="/sign-up" className="text-blue-500">
+            Sign Up
+          </a>
+        </p>
+      </div>
     </Form>
   );
 };
