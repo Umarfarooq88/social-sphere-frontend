@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed w-full bg-white dark:bg-zinc-800 shadow-md">
+    <nav className="fixed z-50 w-full bg-white dark:bg-zinc-800 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
@@ -30,7 +30,7 @@ const Navbar = () => {
             <ul className="flex space-x-4 lg:text-xl">
               <li>
                 <a
-                  href="#"
+                  href="/publish"
                   className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
                 >
                   Publishing
@@ -38,7 +38,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/analytics"
                   className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
                 >
                   Analytics
@@ -46,7 +46,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/engagement"
                   className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
                 >
                   Engagement
