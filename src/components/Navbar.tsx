@@ -31,9 +31,9 @@ const Navbar = () => {
             <ul className="flex space-x-4 lg:text-xl">
               <li>
                 <a
-                  href="/publishing"
+                  href="/publish"
                   className={
-                    pathName === "/publishing"
+                    pathName === "/publish"
                       ? `text-gray-900 dark:text-white`
                       : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
                   }
