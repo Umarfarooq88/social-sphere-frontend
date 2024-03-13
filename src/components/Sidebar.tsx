@@ -10,14 +10,19 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const Sidebar = () => {
+const Sidebar = ({ setActiveScreen }) => {
   // TODO: Get the channels from api
   const channels: string[] = [];
 
   // TODO: Add channel
   const handleAddChannel = () => {};
 
-  const [active, setActive] = useState<string>("");
+  const [active, setActive] = useState<String>("");
+
+  const handleActive = (name: String) => {
+    setActive(name);
+    setActiveScreen(name);
+  };
 
   const onSelectStyle =
     "bg-blue-300 rounded-full text-black dark:text-white dark:bg-blue-600";
@@ -29,7 +34,7 @@ const Sidebar = () => {
           className={`${
             active === "Create" ? onSelectStyle : ""
           } flex justify-between items-center p-4 hover:cursor-pointer`}
-          onClick={() => setActive("Create")}
+          onClick={() => handleActive("Create")}
         >
           <div className="flex items-center">
             <SquarePen size={20} />
@@ -41,7 +46,7 @@ const Sidebar = () => {
           className={`${
             active === "Calendar" ? onSelectStyle : ""
           } flex justify-start items-center p-4 hover:cursor-pointer`}
-          onClick={() => setActive("Calendar")}
+          onClick={() => handleActive("Calendar")}
         >
           <Calendar size={20} />
           <span className="text-xl px-2">Calendar</span>
@@ -79,7 +84,7 @@ const Sidebar = () => {
           className={`${
             active === "Tags" ? onSelectStyle : ""
           } flex justify-start items-center p-4 hover:cursor-pointer`}
-          onClick={() => setActive("Tags")}
+          onClick={() => handleActive("Tags")}
         >
           <Tags size={20} />
           <span className="text-xl px-2">Manage Tags</span>
@@ -88,7 +93,7 @@ const Sidebar = () => {
           className={`${
             active === "New Channel" ? onSelectStyle : ""
           } flex justify-start items-center p-4 hover:cursor-pointer`}
-          onClick={() => setActive("New Channel")}
+          onClick={() => handleActive("New Channel")}
         >
           <Settings size={20} />
           <span className="text-xl px-2">New Channel</span>
