@@ -3,16 +3,17 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { ModeToggle } from "./ModeToggle";
 import Avatar from "./Avatar";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const pathName = usePathname();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <nav className="fixed w-full bg-white dark:bg-zinc-800 shadow-md">
+    <nav className="fixed z-50 w-full bg-white dark:bg-zinc-800 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
@@ -30,24 +31,36 @@ const Navbar = () => {
             <ul className="flex space-x-4 lg:text-xl">
               <li>
                 <a
-                  href="#"
-                  className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
+                  href="/publish"
+                  className={
+                    pathName === "/publish"
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
+                  }
                 >
                   Publishing
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
-                  className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
+                  href="/analytics"
+                  className={
+                    pathName === "/analytics"
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
+                  }
                 >
                   Analytics
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
-                  className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300"
+                  href="/engagement"
+                  className={
+                    pathName === "/engagement"
+                      ? `text-gray-900 dark:text-white`
+                      : `text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition duration-300`
+                  }
                 >
                   Engagement
                 </a>
