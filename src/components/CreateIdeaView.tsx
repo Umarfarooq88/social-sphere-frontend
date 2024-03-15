@@ -4,7 +4,11 @@ import { Textarea } from "./ui/textarea";
 import FileInput from "./FileInput";
 import { Button } from "./ui/button";
 
-const CreateIdeaView = ({ toggle }) => {
+type CreateIdeaViewProps = {
+  toggle: () => void;
+};
+
+const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
   const [textContent, setTextContent] = useState<string>("");
   return (
     <div className="fixed inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
@@ -48,8 +52,6 @@ const CreateIdeaView = ({ toggle }) => {
             </Button>
           </div>
         </form>
-        {/* File upload and AI helper section */}
-        <div></div>
       </div>
     </div>
   );
