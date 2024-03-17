@@ -1,11 +1,11 @@
 import React from "react";
-import CreateIdea from "@/components/CreateIdea";
+import CreatePost from "@/components/CreatePost";
 
 
 const Page = () => {
     return (
       <div>
-        <CreateIdea/> 
+        <CreatePost/> 
       </div>
     );
   };

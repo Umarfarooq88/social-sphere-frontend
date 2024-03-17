@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import Tags from "./Tags";
 import { Textarea } from "./ui/textarea";
@@ -10,6 +11,14 @@ type CreateIdeaViewProps = {
 
 const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
   const [textContent, setTextContent] = useState<string>("");
+  const [mediaUploaded, setMediaUploaded] = useState<boolean>(false); 
+
+  const handleMediaUpload = () => {
+    setMediaUploaded(true); 
+  };
+
+ 
+
   return (
     <div className="fixed inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
       <div className=" mx-80 my-5 bg-white rounded-xl">
@@ -35,18 +44,18 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
             value={textContent}
             onChange={(e) => setTextContent(e.target.value)}
           />
-          <FileInput />
+            <FileInput onUpload={handleMediaUpload}  />
           {/* Save Idea and create post buttons */}
           <div className="flex justify-end p-5">
             <Button
               className="m-2 bg-blue-600"
-              disabled={textContent.length === 0 ? true : false}
+              disabled={textContent.length === 0 && !mediaUploaded} 
             >
               Create Post
             </Button>
             <Button
               className="m-2"
-              disabled={textContent.length === 0 ? true : false}
+              disabled={textContent.length === 0 && !mediaUploaded} 
             >
               Save Idea
             </Button>
