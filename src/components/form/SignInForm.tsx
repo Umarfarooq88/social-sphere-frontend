@@ -2,7 +2,7 @@
 import React from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,12 +25,15 @@ const formSchema = z.object({
     .min(8, "Password must be at least 8 characters")
     .max(20, "Password must be less than 100 characters"),
 });
+
+type FormData = z.infer<typeof formSchema>;
+
 const SignInForm = () => {
   const router = useRouter();
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<string | null>(null);
   const [submitting, setSubmitting] = React.useState<boolean>(false);
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -38,8 +41,7 @@ const SignInForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>, e: Event) {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<FormData> = async (values) => {
     setSuccess(null);
     setError(null);
     setSubmitting(true);
@@ -54,44 +56,37 @@ const SignInForm = () => {
           "Content-Type": "application/json",
         },
       };
-      await axios
-        .post(url, data, config)
-        .then((response) => {
-          if (response.status === 200)
-            setSuccess("You have successfully logged in");
-          setTimeout(() => {
-            router.push("/");
-          }, 2000);
-        })
-        .catch((err) => {
-          setError("Invalid credentials, Retry with correct credentials");
-        });
-    } catch (error) {
-      console.error(error);
+      const response = await axios.post(url, data, config);
+      if (response.status === 200) {
+        setSuccess("You have successfully logged in");
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
+      }
+    } catch (err) {
+      setError("Invalid credentials, Retry with correct credentials");
     }
     setSubmitting(false);
-  }
+  };
 
   return (
     <Form {...form}>
-      {
-        <div className="p-4">
-          {error && (
-            <Alert variant="destructive">
-              <Terminal className="h-4 w-4" />
-              <AlertTitle>Login Failed</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-          {success && (
-            <Alert className="border border-green-500">
-              <Terminal className="h-4 w-4" />
-              <AlertTitle>Success!</AlertTitle>
-              <AlertDescription>{success}</AlertDescription>
-            </Alert>
-          )}
-        </div>
-      }
+      <div className="p-4">
+        {error && (
+          <Alert variant="destructive">
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Login Failed</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+        {success && (
+          <Alert className="border border-green-500">
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Success!</AlertTitle>
+            <AlertDescription>{success}</AlertDescription>
+          </Alert>
+        )}
+      </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-2 items-center "

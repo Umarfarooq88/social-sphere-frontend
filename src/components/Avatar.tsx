@@ -2,7 +2,12 @@ import Image from "next/image";
 import React from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
-const Avatar = ({ email, imageUrl, altText }) => {
+interface AvatarProps {
+  email: string;
+  imageUrl: string;
+  altText: string;
+}
+const Avatar = ({ email, imageUrl, altText }: AvatarProps) => {
   return (
     <div className="flex items-center hover:cursor-pointer">
       <p className="p-2">{email}</p>

@@ -9,17 +9,23 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useRouter } from "next/navigation";
 
-const Sidebar = ({ setActiveScreen }) => {
+type setActiveScreenFuction = (name: string) => void;
+
+interface Props {
+  setActiveScreen: setActiveScreenFuction;
+}
+const Sidebar: React.FC<Props> = ({ setActiveScreen }) => {
   // TODO: Get the channels from api
   const channels: string[] = [];
-
+  const router = useRouter();
   // TODO: Add channel
   const handleAddChannel = () => {};
 
-  const [active, setActive] = useState<String>("");
+  const [active, setActive] = useState<string>("");
 
-  const handleActive = (name: String) => {
+  const handleActive = (name: string) => {
     setActive(name);
     setActiveScreen(name);
   };
@@ -72,7 +78,12 @@ const Sidebar = ({ setActiveScreen }) => {
                 </li>
               ))}
             </ul>
-            <Button onClick={handleAddChannel} className="w-full">
+            <Button
+              onClick={() => {
+                router.push("/account/channels/connect");
+              }}
+              className="w-full"
+            >
               ➕ New Channel
             </Button>
           </AccordionContent>

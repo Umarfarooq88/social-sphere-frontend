@@ -3,7 +3,7 @@ import React from "react";
 import axios from "axios";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -34,6 +34,8 @@ const formSchema = z
     path: ["confirmPassword"],
   });
 
+type FormData = z.infer<typeof formSchema>;
+
 const SignUpForm = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,8 +48,7 @@ const SignUpForm = () => {
   });
 
   // Form submit handler
-  const onSubmit = async (values: z.infer<typeof formSchema>, e: Event) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<FormData> = async (values) => {
     if (values.password === values.confirmPassword) {
       try {
         const url: string = process.env.NEXT_PUBLIC_USER_URL + "register" || "";

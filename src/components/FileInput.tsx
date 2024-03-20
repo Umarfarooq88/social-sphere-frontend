@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { ChangeEvent, useState } from "react";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
@@ -55,10 +55,10 @@ const FileInput: React.FC<FileInputProps> = ({ onUpload }) => {
                   height={100}
                 />
                 <button
-                  className="absolute top-0 right-0 rounded-full bg-red-500 text-white p-1 cursor-pointer transition-all duration-300"
+                  className="absolute top-0 right-0 rounded-full bg-white px-2  text-black dark:text-white  cursor-pointer transition-all duration-300"
                   onClick={() => removeFile(index)}
                 >
-                  &#10006;
+                  &times;
                 </button>
               </li>
             ))}

@@ -1,49 +1,28 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
+const frameworks = ["React"];
 
 export function ComboboxDemo() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -52,40 +31,38 @@ export function ComboboxDemo() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[180px] justify-between"
+          className="w-[200px] justify-between"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Add tag"}
-          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {"Add Tags"}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search tag" className="h-9" />
-          <CommandEmpty>No framework found.</CommandEmpty>
+          <CommandInput placeholder="Search or create tag" />
+          <CommandEmpty>No tags found.</CommandEmpty>
           <CommandGroup>
             {frameworks.map((framework) => (
               <CommandItem
-                key={framework.value}
-                value={framework.value}
+                key={framework}
+                value={framework}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue)
-                  setOpen(false)
+                  setValue(currentValue === value ? "" : currentValue);
+                  setOpen(false);
                 }}
               >
-                {framework.label}
-                <CheckIcon
+                <Check
                   className={cn(
-                    "ml-auto h-4 w-4",
-                    value === framework.value ? "opacity-100" : "opacity-0"
+                    "mr-2 h-4 w-4",
+                    value === framework ? "opacity-100" : "opacity-0"
                   )}
                 />
+                {framework}
               </CommandItem>
             ))}
           </CommandGroup>
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

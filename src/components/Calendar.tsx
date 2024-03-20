@@ -1,7 +1,10 @@
-import Sidebar from "@/components/Sidebar";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import { SchedulerEvent } from "smart-webcomponents-react";
 import "smart-webcomponents-react/source/styles/smart.default.css";
+import { set } from "zod";
+import CreatePost from "./CreatePost";
+import { Button } from "./ui/button";
 
 //Dynamically import the Smart.Scheduler component
 const Scheduler = dynamic(() => import("smart-webcomponents-react/scheduler"), {
@@ -10,6 +13,7 @@ const Scheduler = dynamic(() => import("smart-webcomponents-react/scheduler"), {
 });
 
 function Calendar() {
+  const [createPostView, setCreatePostView] = useState<boolean>(false);
   const today = new Date(),
     todayDate = today.getDate(),
     currentYear = today.getFullYear(),
@@ -47,8 +51,15 @@ function Calendar() {
     ],
     firstDayOfWeek = 1;
 
+  const handleCreatePostView = () => {
+    setCreatePostView(!createPostView);
+  };
   return (
     <main className="mt-20 ml-80 p-1">
+      <div className="flex justify-between items-center p-5">
+        <div className="font-bold pr-5">Calendar</div>
+        <Button onClick={handleCreatePostView}>Create Post</Button>
+      </div>
       <Scheduler
         className={"w-full h-full"}
         id="scheduler"
@@ -59,6 +70,7 @@ function Calendar() {
         views={views}
         firstDayOfWeek={firstDayOfWeek}
       />
+      {createPostView && <CreatePost toggle={handleCreatePostView} />}
     </main>
   );
 }
