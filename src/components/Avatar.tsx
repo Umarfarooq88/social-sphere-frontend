@@ -3,7 +3,7 @@ import React from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
 interface AvatarProps {
-  email: string;
+  email: string | null | undefined;
   imageUrl: string;
   altText: string;
 }

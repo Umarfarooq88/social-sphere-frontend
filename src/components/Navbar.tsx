@@ -4,10 +4,12 @@ import Image from "next/image";
 import { ModeToggle } from "./ModeToggle";
 import Avatar from "./Avatar";
 import { usePathname } from "next/navigation";
+import { useAppSelector } from "@/lib/hooks";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathName = usePathname();
+  const userEmail = useAppSelector((state) => state.user);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -104,7 +106,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <ModeToggle />
             <Avatar
-              email={"tah@gmail.com"}
+              email={userEmail.user?.email}
               imageUrl={"/logo/svg/logo-color.svg"}
               altText={"user-profile"}
             />
@@ -134,7 +136,7 @@ const Navbar = () => {
             <div className="flex p-4">
               <ModeToggle />
               <Avatar
-                email={""}
+                email={userEmail.user?.email}
                 imageUrl={"/logo/svg/logo-color.svg"}
                 altText={"user-profile"}
               />
