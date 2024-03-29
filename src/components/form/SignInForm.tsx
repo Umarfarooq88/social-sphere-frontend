@@ -17,6 +17,9 @@ import axios from "axios";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { setAccessToken, setRefreshToken } from "@/lib/tokens";
+import { useAppDispatch } from "@/lib/hooks";
+import { login } from "@/lib/features/userSlice";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -29,6 +32,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const SignInForm = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<string | null>(null);
@@ -46,9 +50,11 @@ const SignInForm = () => {
     setError(null);
     setSubmitting(true);
     try {
-      const url: string = process.env.NEXT_PUBLIC_USER_URL + "login" || "";
+      const url: string =
+        process.env.NEXT_PUBLIC_BASE_URL + "users/login" || "";
+
       const data = JSON.stringify({
-        emailID: values.email,
+        email: values.email,
         password: values.password,
       });
       const config = {
@@ -57,11 +63,26 @@ const SignInForm = () => {
         },
       };
       const response = await axios.post(url, data, config);
+      const responseData = await response.data;
+      console.log(responseData);
+      console.log("Initialize Setting user data in redux store....");
+      dispatch(
+        login({
+          email: responseData?.message?.user?.email,
+          refreshToken: responseData?.message?.refreshToken,
+        })
+      );
+      console.log("Completed Setting user data in redux store....");
+      const accessToken = responseData?.message?.accessToken;
+      const refreshToken = responseData?.message?.refreshToken;
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      console.log(accessToken, refreshToken);
       if (response.status === 200) {
         setSuccess("You have successfully logged in");
         setTimeout(() => {
           router.push("/");
-        }, 2000);
+        }, 10000);
       }
     } catch (err) {
       setError("Invalid credentials, Retry with correct credentials");

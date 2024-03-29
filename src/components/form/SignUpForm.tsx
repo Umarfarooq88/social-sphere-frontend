@@ -51,9 +51,10 @@ const SignUpForm = () => {
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     if (values.password === values.confirmPassword) {
       try {
-        const url: string = process.env.NEXT_PUBLIC_USER_URL + "register" || "";
+        const url: string =
+          process.env.NEXT_PUBLIC_BASE_URL + "users/register" || "";
         const data = JSON.stringify({
-          emailID: values.email,
+          email: values.email,
           password: values.password,
         });
         const config = {
@@ -62,7 +63,10 @@ const SignUpForm = () => {
           },
         };
         await axios.post(url, data, config).then((response) => {
-          if (response.status === 201) router.push("/sign-in");
+          if (response.status === 201) {
+            console.log("Account created successfully");
+            router.push("/sign-in");
+          }
         });
       } catch (error) {
         console.error(error);
