@@ -17,7 +17,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import api from "@/lib/api";
-import { Terminal } from "lucide-react";
+import { Divide, Terminal } from "lucide-react";
+import { AiOutlineClose } from "react-icons/ai";
+import Assistant from "./Assistant";
 type CreateIdeaViewProps = {
   toggle: () => void;
 };
@@ -28,6 +30,7 @@ type alertType = {
 const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
   const [textContent, setTextContent] = useState<string>("");
   const [mediaUploaded, setMediaUploaded] = useState<boolean>(false);
+  const [assistantView, setAssistantView] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [alert, setAlert] = useState<alertType>();
   const handleMediaUpload = (files: File[]) => {
@@ -76,7 +79,7 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
     }
   };
   return (
-    <div className="fixed inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
+    <div className="fixed flex justify-between items-center inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
       {alert && (
         <Alert
           className={`${
@@ -90,7 +93,12 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
           <AlertDescription>{alert.alertMessage}</AlertDescription>
         </Alert>
       )}
-      <div className=" mx-80 my-5 bg-white rounded-xl">
+      {assistantView && (
+        <div className="p-5 h-screen relative">
+          <Assistant toggle={setAssistantView} />
+        </div>
+      )}
+      <div className="  bg-white rounded-xl">
         {/* Heading - new Idea and Tags */}
         <div className="flex justify-between items-center ">
           <div className="flex justify-between items-center px-10 py-0">
@@ -100,12 +108,15 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
           <div className="flex justify-end p-5">
             {textContent.length === 0 || mediaUploaded ? (
               <button className="text-3xl font-bold" onClick={toggle}>
-                &times;
+                <AiOutlineClose />
               </button>
             ) : (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <button className="text-3xl font-bold">&times;</button>
+                  <button className="text-3xl font-bold">
+                    {" "}
+                    <AiOutlineClose />
+                  </button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -126,15 +137,26 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
           </div>
         </div>
         {/* Text layout to write */}
-        <form method="POST" className="p-2 px-6">
-          <Textarea
-            placeholder="Start working on the idea now...."
-            rows={20}
-            cols={200}
-            className="border-none"
-            value={textContent}
-            onChange={(e) => setTextContent(e.target.value)}
-          />
+        <div className="p-2 px-6">
+          <div className="relative flex justify-center items-center">
+            <Textarea
+              placeholder="Start working on the idea now or "
+              rows={20}
+              cols={200}
+              className="border-none"
+              value={textContent}
+              onChange={(e) => setTextContent(e.target.value)}
+            />
+            {!textContent && (
+              <Button
+                onClick={() => setAssistantView(!assistantView)}
+                className="absolute top-1 left-60  px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg opacity-50 hover:opacity-100"
+              >
+                Use the AI Assistant
+              </Button>
+            )}
+          </div>
+
           <FileInput onUpload={handleMediaUpload} allowMultipleFiles={false} />
           {/* Save Idea and create post buttons */}
           <div className="flex justify-end p-5">
@@ -153,7 +175,7 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
               Save Idea
             </Button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

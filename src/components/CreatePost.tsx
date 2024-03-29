@@ -5,6 +5,8 @@ import FileInput from "./FileInput";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { SelectBox } from "./SelectBox";
+import Assistant from "./Assistant";
+import { AiOutlineClose } from "react-icons/ai";
 
 type ToggleFunction = () => void;
 
@@ -15,7 +17,7 @@ interface Props {
 const CreatePost: React.FC<Props> = ({ toggle }) => {
   const [textareaValue, setTextareaValue] = useState("");
   const [mediaUploaded, setMediaUploaded] = useState(false);
-
+  const [assistantView, setAssistantView] = useState(false);
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -32,6 +34,12 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
+      {/* Assistant view */}
+      {assistantView && (
+        <div className="p-5 h-screen relative">
+          <Assistant toggle={setAssistantView} />
+        </div>
+      )}
       <div className="bg-white p-8 w-1/2 h-auto rounded-lg">
         <div className="flex justify-between mb-4">
           <h2 className="text-lg font-bold">Create Post</h2>
@@ -39,7 +47,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
             <ComboboxDemo />
           </div>
           <button className="text-3xl font-bold" onClick={toggle}>
-            &times;
+            <AiOutlineClose />
           </button>
         </div>
         <div className="relative">
@@ -52,9 +60,12 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
             onChange={handleTextareaChange}
           ></Textarea>
           {!textareaValue && (
-            <button className="absolute top-1 left-36  px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg opacity-50 hover:opacity-100">
+            <Button
+              onClick={() => setAssistantView(!assistantView)}
+              className="absolute top-1 left-36  px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg opacity-50 hover:opacity-100"
+            >
               Use the AI Assistant
-            </button>
+            </Button>
           )}
         </div>
         <div>
@@ -67,6 +78,12 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
           <SelectBox />
         </div>
       </div>
+      {/* LinkedIn preview
+      {assistantView && (
+        <div className="p-5 h-screen relative">
+          <Assistant toggle={setAssistantView} />
+        </div>
+      )} */}
     </div>
   );
 };
