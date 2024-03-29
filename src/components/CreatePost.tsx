@@ -37,7 +37,7 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
       {/* Assistant view */}
       {assistantView && (
         <div className="p-5 h-screen relative">
-          <Assistant toggle={setAssistantView} />
+          <Assistant toggle={setAssistantView} setPromptText={""} />
         </div>
       )}
       <div className="bg-white p-8 w-1/2 h-auto rounded-lg">
