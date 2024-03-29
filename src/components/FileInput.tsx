@@ -5,9 +5,13 @@ import Image from "next/image";
 
 interface FileInputProps {
   onUpload: (files: File[]) => void;
+  allowMultipleFiles?: boolean;
 }
 
-const FileInput: React.FC<FileInputProps> = ({ onUpload }) => {
+const FileInput: React.FC<FileInputProps> = ({
+  onUpload,
+  allowMultipleFiles,
+}) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,6 +19,7 @@ const FileInput: React.FC<FileInputProps> = ({ onUpload }) => {
       const files = Array.from(e.target.files);
       setSelectedFiles([...selectedFiles, ...files]);
       onUpload([...selectedFiles, ...files]); // Call the onUpload function with the updated files
+      console.log(files[0]);
     }
   };
 
@@ -36,7 +41,7 @@ const FileInput: React.FC<FileInputProps> = ({ onUpload }) => {
             accept="image/*, video/*"
             onChange={handleFileChange}
             className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
-            multiple
+            multiple={allowMultipleFiles}
           />
         </label>
       </div>

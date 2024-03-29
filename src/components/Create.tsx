@@ -1,34 +1,39 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { FaWandMagic } from "react-icons/fa6";
 import { Button } from "./ui/button";
 import IdeaCard from "./IdeaCard";
 import Tags from "./Tags";
 import CreateIdeaView from "./CreateIdeaView";
+import api from "@/lib/api";
 
 const Create = () => {
-  const idea = [
-    {
-      img: "/next.svg",
-      text: "You can now save all your ideas wherever you find them with the Buffer browser extension! Find inspiration on the web? You can highlight text or select an image and right click “Save for Later” and it’ll appear right here. Or you can click the Buffer icon in your browser extension bar to save a website link to this space. https://buffer.com/extensions",
-    },
-    {
-      img: "/next.svg",
-      text: "You can now save all your ideas wherever you find them with the Buffer browser extension! Find inspiration on the web? You can highlight text or select an image and right click “Save for Later” and it’ll appear right here. Or you can click the Buffer icon in your browser extension bar to save a website link to this space. https://buffer.com/extensions",
-    },
-    {
-      img: "/next.svg",
-      text: "You can now save all your ideas wherever you find them with the Buffer browser extension! Find inspiration on the web? You can highlight text or select an image and right click “Save for Later” and it’ll appear right here. Or you can click the Buffer icon in your browser extension bar to save a website link to this space. https://buffer.com/extensions",
-    },
-    {
-      img: "/next.svg",
-      text: "You can now save all your ideas wherever you find them with the Buffer browser extension! Find inspiration on the web? You can highlight text or select an image and right click “Save for Later” and it’ll appear right here. Or you can click the Buffer icon in your browser extension bar to save a website link to this space. https://buffer.com/extensions",
-    },
-  ];
+  const [ideas, setIdeas] = useState([{}]);
+  const getIdeas = async () => {
+    try {
+      const response = await api.get(`/ideas/get-ideas`);
+      if (response) {
+        setIdeas(response.data.message);
+        console.log(response.data.message);
+        console.log(ideas);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [createIdeaView, setCreateIdeaView] = useState(false);
 
   const handleClick = () => {
     setCreateIdeaView(!createIdeaView);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getIdeas();
+    };
+    fetchData();
+  }, []);
 
   return (
     <section className="mt-20 ml-72">
@@ -46,8 +51,15 @@ const Create = () => {
         </div>
       </div>
       <main className="p-2 m-2 grid lg:grid-cols-3 gap-9">
-        {idea.map((value, index) => {
-          return <IdeaCard img={value.img} text={value.text} key={index} />;
+        {ideas.map((value, index) => {
+          return (
+            <IdeaCard
+              img={value.image}
+              text={value.content}
+              id={value._id}
+              key={index}
+            />
+          );
         })}
       </main>
       {createIdeaView && <CreateIdeaView toggle={handleClick} />}
