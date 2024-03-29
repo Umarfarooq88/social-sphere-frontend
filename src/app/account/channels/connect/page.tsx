@@ -1,7 +1,15 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
+import AddChannelModal from "@/components/AddChannelModal";
 
-const page = () => {
-  return <div>page</div>;
+const Page = () => {
+
+  return (
+    <div>
+     
+      <AddChannelModal/>
+    </div>
+  );
 };
 
-export default page;
+export default Page;
