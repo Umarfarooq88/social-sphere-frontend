@@ -20,6 +20,7 @@ import api from "@/lib/api";
 import { Divide, Terminal } from "lucide-react";
 import { AiOutlineClose } from "react-icons/ai";
 import Assistant from "./Assistant";
+import { FaWandMagicSparkles } from "react-icons/fa6";
 type CreateIdeaViewProps = {
   toggle: () => void;
 };
@@ -81,17 +82,19 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
   return (
     <div className="fixed flex justify-between items-center inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
       {alert && (
-        <Alert
-          className={`${
-            alert.alert === "Success"
-              ? "border border-green-500 text-green-500"
-              : "border border-red-500 text-red-500"
-          }`}
-        >
-          <Terminal className="h-4 w-4" />
-          <AlertTitle>Heads up!</AlertTitle>
-          <AlertDescription>{alert.alertMessage}</AlertDescription>
-        </Alert>
+        <div className="fixed flex justify-center items-center  top-6 lg:left-40 lg:right-40">
+          <Alert
+            className={`${
+              alert?.alert === "Success"
+                ? "border border-green-500 text-green-500"
+                : "border border-red-500 text-red-500"
+            } p-5 w-96 rounded-xl top-0 z-auto`}
+          >
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Heads up!</AlertTitle>
+            <AlertDescription>{alert?.alertMessage}</AlertDescription>
+          </Alert>
+        </div>
       )}
       {assistantView && (
         <div className="p-5 h-screen relative">
@@ -152,6 +155,7 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
                 onClick={() => setAssistantView(!assistantView)}
                 className="absolute top-1 left-60  px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg opacity-50 hover:opacity-100"
               >
+                <FaWandMagicSparkles />
                 Use the AI Assistant
               </Button>
             )}

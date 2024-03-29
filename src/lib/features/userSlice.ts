@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deleteUserCookies, setUserCookies } from "../tokens";
 
 interface UserState {
     user: {
+        userId: string|null;
         email: string | null;
+        accessToken: string | null;
         refreshToken: string | null;
     } | null;
 }
@@ -18,9 +21,12 @@ export const userSlice = createSlice({
         // Modify the backend to send user data on login and then update this code
         login: (state, action) => {
             state.user = action.payload;
+            setUserCookies(action.payload);
+            
         },
         logout: (state) => {
             state.user = null;
+            deleteUserCookies();
         },
     },
 });

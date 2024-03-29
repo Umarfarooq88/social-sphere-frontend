@@ -16,9 +16,10 @@ interface IdeaCardProps {
   img: string;
   text: string;
   id: string;
+  triggerFetch: () => void;
 }
 
-const IdeaCard = ({ img, text, id }: IdeaCardProps) => {
+const IdeaCard = ({ img, text, id, triggerFetch }: IdeaCardProps) => {
   const handleDelete = async () => {
     // Handle deletion logic here
     console.log("Delete clicked for image:", img);
@@ -28,8 +29,11 @@ const IdeaCard = ({ img, text, id }: IdeaCardProps) => {
       );
       if (response.status === 200) {
         console.log("Idea deleted successfully");
+        triggerFetch();
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

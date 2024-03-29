@@ -1,24 +1,55 @@
 import {setCookie, getCookie, deleteCookie} from 'cookies-next'
 
-export  function setAccessToken(token: string) {
+function setAccessToken(token: string) {
     setCookie("accessToken", token)
-  }
+}
   
-  export  function getAccessToken() {
-    return getCookie("accessToken")
-  }
-  
-  export  function deleteAccessToken(){
+function deleteAccessToken(){
     deleteCookie("accessToken")
-  }
-  export  function setRefreshToken(token: string) {
+}
+
+function setRefreshToken(token: string) {
     setCookie("refreshToken", token)
-  }
+}
   
-  export  function getRefreshToken() {
-    return getCookie("refreshToken")
-  }
-  
-  export  function deleteRefreshToken(){
+function deleteRefreshToken(){
     deleteCookie("refreshToken")
-  }
+}
+
+function setUserEmail(email:string){
+    setCookie("userEmail",email)
+}
+
+function setUserId(userId:string){
+    setCookie("userId",userId)
+}
+
+export function setUserCookies(user:any){
+    setAccessToken(user.accessToken)
+    setRefreshToken(user.refreshToken)
+    setUserEmail(user.email)
+    setUserId(user.userId)
+}
+
+export function deleteUserCookies(){
+    deleteAccessToken()
+    deleteRefreshToken()
+    deleteCookie("userEmail")
+    deleteCookie("userId")
+}
+
+export function getAccessToken() {
+    return getCookie("accessToken")
+}
+
+
+export function getRefreshToken() {
+    return getCookie("refreshToken")
+}
+  
+export function getUserEmail(){
+  return getCookie("userEmail")
+}
+export function getUserId(){
+  return getCookie("userId")
+}

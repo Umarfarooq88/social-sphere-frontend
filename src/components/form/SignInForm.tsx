@@ -17,7 +17,6 @@ import axios from "axios";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { setAccessToken, setRefreshToken } from "@/lib/tokens";
 import { useAppDispatch } from "@/lib/hooks";
 import { login } from "@/lib/features/userSlice";
 
@@ -65,19 +64,14 @@ const SignInForm = () => {
       const response = await axios.post(url, data, config);
       const responseData = await response.data;
       console.log(responseData);
-      console.log("Initialize Setting user data in redux store....");
       dispatch(
         login({
           email: responseData?.message?.user?.email,
           refreshToken: responseData?.message?.refreshToken,
+          accessToken: responseData?.message?.accessToken,
+          userId: responseData?.message?.user?._id,
         })
       );
-      console.log("Completed Setting user data in redux store....");
-      const accessToken = responseData?.message?.accessToken;
-      const refreshToken = responseData?.message?.refreshToken;
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
-      console.log(accessToken, refreshToken);
       if (response.status === 200) {
         setSuccess("You have successfully logged in");
         setTimeout(() => {

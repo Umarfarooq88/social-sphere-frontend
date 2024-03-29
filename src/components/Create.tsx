@@ -6,16 +6,22 @@ import IdeaCard from "./IdeaCard";
 import Tags from "./Tags";
 import CreateIdeaView from "./CreateIdeaView";
 import api from "@/lib/api";
+import Assistant from "./Assistant";
+
+type valueType = {
+  image: string;
+  content: string;
+  _id: string;
+};
 
 const Create = () => {
-  const [ideas, setIdeas] = useState([{}]);
+  const [ideas, setIdeas] = useState([{ image: "", content: "", _id: "" }]);
   const getIdeas = async () => {
     try {
       const response = await api.get(`/ideas/get-ideas`);
       if (response) {
         setIdeas(response.data.message);
         console.log(response.data.message);
-        console.log(ideas);
       }
     } catch (error) {
       console.log(error);
@@ -23,18 +29,17 @@ const Create = () => {
   };
 
   const [createIdeaView, setCreateIdeaView] = useState(false);
-
+  const [generateIdeaView, setGenerateIdeaView] = useState(false);
   const handleClick = () => {
     setCreateIdeaView(!createIdeaView);
   };
-
+  const fetchData = async () => {
+    await getIdeas();
+    console.log(ideas);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      await getIdeas();
-    };
     fetchData();
   }, []);
-
   return (
     <section className="mt-20 ml-72">
       <div className="p-5 flex justify-between items-center">
@@ -43,7 +48,12 @@ const Create = () => {
           <Tags />
         </div>
         <div className="flex">
-          <button className="flex items-center justify-between px-2 bg-blue-500 dark:bg-blue-800 rounded-xl mx-2">
+          <button
+            onClick={() => {
+              setGenerateIdeaView(!generateIdeaView);
+            }}
+            className="flex items-center justify-between px-2 bg-blue-500 dark:bg-blue-800 rounded-xl mx-2"
+          >
             <FaWandMagic />
             <span className="px-2">Generate Ideas</span>
           </button>
@@ -51,18 +61,27 @@ const Create = () => {
         </div>
       </div>
       <main className="p-2 m-2 grid lg:grid-cols-3 gap-9">
-        {ideas.map((value, index) => {
+        {ideas.map((value, index: number) => {
           return (
             <IdeaCard
               img={value.image}
               text={value.content}
               id={value._id}
+              triggerFetch={fetchData}
               key={index}
             />
           );
         })}
       </main>
       {createIdeaView && <CreateIdeaView toggle={handleClick} />}
+      {generateIdeaView && (
+        <div className="fixed flex justify-between items-center inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
+          <Assistant
+            toggle={() => setGenerateIdeaView(!generateIdeaView)}
+            setPromptText={""}
+          />
+        </div>
+      )}
     </section>
   );
 };
