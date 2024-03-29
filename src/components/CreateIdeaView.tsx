@@ -95,7 +95,7 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
       )}
       {assistantView && (
         <div className="p-5 h-screen relative">
-          <Assistant toggle={setAssistantView} />
+          <Assistant toggle={setAssistantView} setPromptText={setTextContent} />
         </div>
       )}
       <div className="  bg-white rounded-xl">
