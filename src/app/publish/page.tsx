@@ -4,11 +4,14 @@ import Create from "@/components/Create";
 import ManageTags from "@/components/ManageTags";
 import Settings from "@/components/Settings";
 import Sidebar from "@/components/Sidebar";
+import { isUserLoggedIn } from "@/lib/utils";
 import React, { useState } from "react";
 
 const Page = () => {
-  const [activeScreen, setActiveScreen] = useState("Create");
+  // Check if user is loggedIn, If No then redirect to login page
+  isUserLoggedIn();
 
+  const [activeScreen, setActiveScreen] = useState("Create");
   const renderComponent = () => {
     switch (activeScreen) {
       case "Create":
