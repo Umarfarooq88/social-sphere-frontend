@@ -4,7 +4,9 @@ import Image from "next/image";
 import { ModeToggle } from "./ModeToggle";
 import Avatar from "./Avatar";
 import { usePathname } from "next/navigation";
-import { getUserEmail } from "@/lib/tokens";
+import { getUserEmail, isAccessTokenExpired } from "@/lib/tokens";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -103,14 +105,29 @@ const Navbar = () => {
           </div>
 
           {/* ModeToggle and Avatar */}
-          <div className="hidden md:flex items-center space-x-4">
-            <ModeToggle />
-            <Avatar
-              email={userEmail}
-              imageUrl={"/logo/svg/logo-color.svg"}
-              altText={"user-profile"}
-            />
-          </div>
+          {isAccessTokenExpired() ? (
+            <>
+              <div className="flex justify-between items-center">
+                <Button className="mx-2">
+                  <Link href="/sign-in">Login</Link>
+                </Button>
+                <Button className="mx-2">
+                  <Link href="/sign-up">SignUp</Link>
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="hidden md:flex items-center space-x-4">
+                <ModeToggle />
+                <Avatar
+                  email={userEmail}
+                  imageUrl={"/logo/svg/logo-color.svg"}
+                  altText={"user-profile"}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         {/* Dropdown menu for smaller screens */}
@@ -133,14 +150,29 @@ const Navbar = () => {
                 </a>
               </li>
             </ul>
-            <div className="flex p-4">
-              <ModeToggle />
-              <Avatar
-                email={userEmail}
-                imageUrl={"/logo/svg/logo-color.svg"}
-                altText={"user-profile"}
-              />
-            </div>
+            {isAccessTokenExpired() ? (
+              <>
+                <div className="flex justify-between items-center">
+                  <Button className="mx-2">
+                    <Link href="/sign-in">Login</Link>
+                  </Button>
+                  <Button className="mx-2">
+                    <Link href="/sign-up">SignUp</Link>
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="hidden md:flex items-center space-x-4">
+                  <ModeToggle />
+                  <Avatar
+                    email={userEmail}
+                    imageUrl={"/logo/svg/logo-color.svg"}
+                    altText={"user-profile"}
+                  />
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>

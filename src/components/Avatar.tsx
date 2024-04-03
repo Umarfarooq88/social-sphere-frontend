@@ -92,15 +92,6 @@ const Avatar = ({ email, imageUrl, altText }: AvatarProps) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {showMore && (
-        <div className="absolute z-10 top-full right-0 bg-white dark:bg-zinc-800 shadow-md min-w-48 rounded-md py-1 text-sm ring-1 ring-black ring-opacity-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75">
-          <ul>
-            <li>Profile</li>
-            <li>Settings</li>
-            <li>Logout</li>
-          </ul>
-        </div>
-      )}
     </>
   );
 };

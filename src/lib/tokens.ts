@@ -53,3 +53,7 @@ export function getUserEmail(){
 export function getUserId(){
   return getCookie("userId")
 }
+
+export function isAccessTokenExpired(){
+    return !getAccessToken()
+}
