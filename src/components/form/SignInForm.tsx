@@ -76,7 +76,7 @@ const SignInForm = () => {
         setSuccess("You have successfully logged in");
         setTimeout(() => {
           router.push("/");
-        }, 10000);
+        }, 3000);
       }
     } catch (err) {
       setError("Invalid credentials, Retry with correct credentials");
