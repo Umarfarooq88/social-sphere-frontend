@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next";
 import api from "@/lib/api";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 const AddChannelModal = () => {
+  const router = useRouter();
+  const [codeExchanged, setCodeExchanged] = useState(false);
   const generateRandomState = () => {
     // Generate a random string to use as the state parameter
     return Math.random().toString(36).substring(2);
@@ -33,9 +36,14 @@ const AddChannelModal = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const authorizationCode = urlParams.get("code");
     const returnedState = urlParams.get("state");
-    if (authorizationCode && returnedState) {
+
+    if (authorizationCode && returnedState && !codeExchanged) {
+      // Set the codeExchanged flag to true to prevent further processing
+      setCodeExchanged(true);
       exchangeAuthorizationCodeForToken(authorizationCode, returnedState);
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
+    router.push("/publish");
   }, []);
 
   const exchangeAuthorizationCodeForToken = async (
@@ -54,21 +62,25 @@ const AddChannelModal = () => {
         });
         console.log(response);
         // Get access token from response data
-        const accessToken = response.data.message.access_token;
-        // Store authorization code and access token as cookies
-        setCookie("linkedInAccessToken", accessToken);
-        console.log("authorisation", authorizationCode);
-        console.log("accessToken", accessToken);
+        if (response.status === 200) {
+          const accessToken = response.data.message.access_token;
+          // Store authorization code and access token as cookies
+          setCookie("linkedInAccessToken", accessToken);
+          console.log("authorisation", authorizationCode);
+          console.log("accessToken", accessToken);
 
-        // Calling post request to DB for access token channel name
-        // await createChannel();
+          // Calling post request to DB for access token channel name
+          await createChannel(accessToken);
+        }
       }
+      await getLinkedInUser();
     } catch (error) {
       console.log(error);
     }
   };
+
   // Sending access token and channelName to DB
-  const createChannel = async () => {
+  const createChannel = async (accessToken: string) => {
     try {
       const response = await api.post("users/channel/create-channel", {
         channelName: "LinkedIn",
@@ -90,6 +102,7 @@ const AddChannelModal = () => {
 
     console.log(linkedInProfile);
   };
+
   const handleYouTubeClick = () => {
     console.log("YouTube button clicked");
   };
@@ -109,12 +122,6 @@ const AddChannelModal = () => {
           className="bg-red-500 hover:bg-red-600 text-white ml-2 px-4 py-2 rounded-lg transition duration-300"
         >
           YouTube
-        </Button>
-        <Button
-          onClick={getLinkedInUser}
-          className="bg-red-500 hover:bg-red-600 text-white ml-2 px-4 py-2 rounded-lg transition duration-300"
-        >
-          Get-User
         </Button>
       </div>
     </div>
