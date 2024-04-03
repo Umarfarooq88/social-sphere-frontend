@@ -14,12 +14,17 @@ import { MdAccountCircle } from "react-icons/md";
 import { GrChannel } from "react-icons/gr";
 import { IoIosSettings } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
+import { deleteUserCookies } from "@/lib/tokens";
 
 interface AvatarProps {
   email: string | null | undefined;
   imageUrl: string;
   altText: string;
 }
+const handleLogout = () => {
+  deleteUserCookies();
+};
+
 const Avatar = ({ email, imageUrl, altText }: AvatarProps) => {
   const [showMore, setShowMore] = useState(false);
   const router = useRouter();
@@ -81,7 +86,7 @@ const Avatar = ({ email, imageUrl, altText }: AvatarProps) => {
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <div className="flex justify-center items-center">
                 <div className="pr-2">
                   <BiLogOut size={20} />
