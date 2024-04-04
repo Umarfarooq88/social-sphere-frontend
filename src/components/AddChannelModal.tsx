@@ -42,8 +42,8 @@ const AddChannelModal = () => {
       setCodeExchanged(true);
       exchangeAuthorizationCodeForToken(authorizationCode, returnedState);
       window.history.replaceState({}, document.title, window.location.pathname);
+      router.push("/publish");
     }
-    router.push("/publish");
   }, []);
 
   const exchangeAuthorizationCodeForToken = async (
@@ -70,10 +70,32 @@ const AddChannelModal = () => {
           console.log("accessToken", accessToken);
 
           // Calling post request to DB for access token channel name
-          await createChannel(accessToken);
+          const createChannelResponse = await createChannel(accessToken);
+
+          if (
+            createChannelResponse?.status === 201 ||
+            createChannelResponse?.status === 200
+          ) {
+            const linkedInData = await getLinkedInUser();
+            const data = linkedInData.message;
+
+            const updateChannelResponse = await api.put(
+              "users/channel/update-channel",
+              {
+                channelName: "LinkedIn",
+                sub: data.sub,
+                userName: data.name,
+                userEmail: data.email,
+                profilePicture: data.picture,
+              }
+            );
+            console.log(updateChannelResponse);
+            if (updateChannelResponse.status === 200) {
+              console.log("Channel updated:", updateChannelResponse.data);
+            }
+          }
         }
       }
-      await getLinkedInUser();
     } catch (error) {
       console.log(error);
     }
@@ -86,8 +108,8 @@ const AddChannelModal = () => {
         channelName: "LinkedIn",
         accessToken: accessToken,
       });
-
       console.log("Channel created:", response.data);
+      return response;
     } catch (error) {
       console.error("Error creating channel:", error);
     }
@@ -100,7 +122,8 @@ const AddChannelModal = () => {
       linkedInAccessToken: accessToken,
     });
 
-    console.log(linkedInProfile);
+    console.log(linkedInProfile.data);
+    return linkedInProfile.data;
   };
 
   const handleYouTubeClick = () => {

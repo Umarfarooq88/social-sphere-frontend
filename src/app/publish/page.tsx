@@ -23,7 +23,7 @@ const Page = () => {
       case "Tags":
         return <ManageTags />;
       default:
-        return null;
+        return <></>;
     }
   };
 
