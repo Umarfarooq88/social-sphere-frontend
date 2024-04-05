@@ -21,13 +21,15 @@ interface AvatarProps {
   imageUrl: string;
   altText: string;
 }
-const handleLogout = () => {
-  deleteUserCookies();
-};
 
 const Avatar = ({ email, imageUrl, altText }: AvatarProps) => {
   const [showMore, setShowMore] = useState(false);
   const router = useRouter();
+  const handleLogout = () => {
+    deleteUserCookies();
+    router.push("/sign-in");
+  };
+
   return (
     <>
       <div className="relative flex items-center hover:cursor-pointer">

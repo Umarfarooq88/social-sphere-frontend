@@ -21,6 +21,7 @@ import { Divide, Terminal } from "lucide-react";
 import { AiOutlineClose } from "react-icons/ai";
 import Assistant from "./Assistant";
 import { FaWandMagicSparkles } from "react-icons/fa6";
+import Spinner from "./Spinner";
 type CreateIdeaViewProps = {
   toggle: () => void;
 };
@@ -29,6 +30,7 @@ type alertType = {
   alertMessage: string;
 };
 const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
+  const [saving, setSaving] = useState(false);
   const [textContent, setTextContent] = useState<string>("");
   const [mediaUploaded, setMediaUploaded] = useState<boolean>(false);
   const [assistantView, setAssistantView] = useState(false);
@@ -39,7 +41,7 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
     setMediaUploaded(true);
   };
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleCreatePost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log(textContent, mediaUploaded);
   };
@@ -47,6 +49,7 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
   const handleSaveIdea = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
+      setSaving(true);
       console.log("Save Idea", textContent, files[0]);
       if (!files[0]) {
         console.error("No files selected");
@@ -77,6 +80,8 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
         alertMessage: "Failed to save the idea. Please try again later.",
       });
       console.log(error);
+    } finally {
+      setSaving(false);
     }
   };
   return (
@@ -141,33 +146,43 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
         </div>
         {/* Text layout to write */}
         <div className="p-2 px-6">
-          <div className="relative flex justify-center items-center">
-            <Textarea
-              placeholder="Start working on the idea now or "
-              rows={20}
-              cols={200}
-              className="border-none"
-              value={textContent}
-              onChange={(e) => setTextContent(e.target.value)}
-            />
-            {!textContent && (
-              <Button
-                onClick={() => setAssistantView(!assistantView)}
-                className="absolute top-1 left-60  px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg opacity-50 hover:opacity-100"
-              >
-                <FaWandMagicSparkles />
-                Use the AI Assistant
-              </Button>
-            )}
-          </div>
+          {saving && (
+            <div className="fixed flex justify-center items-center inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
+              <Spinner className="bg-none" text="Saving Idea..." />
+            </div>
+          )}
+          <div>
+            <div className="relative flex justify-center items-center">
+              <Textarea
+                placeholder="Start working on the idea now or "
+                rows={20}
+                cols={200}
+                className="border-none"
+                value={textContent}
+                onChange={(e) => setTextContent(e.target.value)}
+              />
+              {!textContent && (
+                <Button
+                  onClick={() => setAssistantView(!assistantView)}
+                  className="absolute top-1 left-60  px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg opacity-50 hover:opacity-100"
+                >
+                  <FaWandMagicSparkles />
+                  Use the AI Assistant
+                </Button>
+              )}
+            </div>
 
-          <FileInput onUpload={handleMediaUpload} allowMultipleFiles={false} />
+            <FileInput
+              onUpload={handleMediaUpload}
+              allowMultipleFiles={false}
+            />
+          </div>
           {/* Save Idea and create post buttons */}
           <div className="flex justify-end p-5">
             <Button
               className="m-2 bg-blue-600"
               disabled={textContent.length === 0 || !mediaUploaded}
-              onClick={handleSubmit}
+              onClick={handleCreatePost}
             >
               Create Post
             </Button>

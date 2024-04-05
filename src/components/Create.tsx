@@ -8,12 +8,6 @@ import CreateIdeaView from "./CreateIdeaView";
 import api from "@/lib/api";
 import Assistant from "./Assistant";
 
-type valueType = {
-  image: string;
-  content: string;
-  _id: string;
-};
-
 const Create = () => {
   const [ideas, setIdeas] = useState([{ image: "", content: "", _id: "" }]);
   const getIdeas = async () => {

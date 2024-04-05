@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 import ChannelModal from "./social/linkedIn/ChannelModal";
+import { Skeleton } from "./ui/skeleton";
 
 type setActiveScreenFuction = (name: string) => void;
 
@@ -19,6 +20,7 @@ interface Props {
   setActiveScreen: setActiveScreenFuction;
 }
 const Sidebar: React.FC<Props> = ({ setActiveScreen }) => {
+  const [loading, setLoading] = useState(true);
   // TODO: Get the channels from api
   const getChannels = async () => {
     await api
@@ -26,6 +28,7 @@ const Sidebar: React.FC<Props> = ({ setActiveScreen }) => {
       .then((res) => {
         setChannels(res.data.message.channels);
         console.log(res.data.message.channels);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -52,12 +55,6 @@ const Sidebar: React.FC<Props> = ({ setActiveScreen }) => {
   const onSelectStyle =
     "bg-blue-300 rounded-full text-black dark:text-white dark:bg-blue-600";
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await getChannels();
-    };
-    fetchData();
-  }, []);
   return (
     <div className="fixed left-1 top-0 mt-20 bg-white text-black dark:bg-black dark:text-white h-screen w-72 flex flex-col overflow-hidden">
       <header>
@@ -87,34 +84,28 @@ const Sidebar: React.FC<Props> = ({ setActiveScreen }) => {
 
       {/* TODO: Add scrollable view if number of channels exceed */}
       <Accordion type="single" collapsible className="px-5 overflow-y-auto">
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Channels</AccordionTrigger>
+        <AccordionItem value="channels">
+          <AccordionTrigger onClick={getChannels}>Channels</AccordionTrigger>
           <AccordionContent>
-            {"Connect a channel to get started 👇"}
+            {"Connected channels 👇"}
             <ul className=" flex-1">
               {channels.map((item, index) => (
-                <>
-                  <li key={index} className="p-2">
+                <li key={index} className="p-2">
+                  {loading ? (
+                    <div className="flex justify-start items-center my-5">
+                      <Skeleton className="w-10 h-10 rounded-full mx-5" />
+                      <Skeleton className="w-40 h-10 rounded-xl" />
+                    </div>
+                  ) : (
                     <ChannelModal
                       imgURL={item?.profilePicture}
                       name={item?.channelName}
                     />
-                  </li>
-                  <li key={index} className="p-2">
-                    <ChannelModal
-                      imgURL={item?.profilePicture}
-                      name={item?.channelName}
-                    />
-                  </li>
-                  <li key={index} className="p-2">
-                    <ChannelModal
-                      imgURL={item?.profilePicture}
-                      name={item?.channelName}
-                    />
-                  </li>
-                </>
+                  )}
+                </li>
               ))}
             </ul>
+            {"Connect a channel to get started 👇"}
             <Button
               onClick={() => {
                 router.push("/account/channels/connect");

@@ -2,14 +2,14 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { SchedulerEvent } from "smart-webcomponents-react";
 import "smart-webcomponents-react/source/styles/smart.default.css";
-import { set } from "zod";
 import CreatePost from "./CreatePost";
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 
 //Dynamically import the Smart.Scheduler component
 const Scheduler = dynamic(() => import("smart-webcomponents-react/scheduler"), {
   ssr: false, //no server-side rendering
-  loading: () => <p>Loading...</p>,
+  loading: () => <Skeleton className="w-screen h-screen rounded-xl" />,
 });
 
 function Calendar() {

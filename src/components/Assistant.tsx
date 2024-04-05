@@ -10,16 +10,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Spinner from "./Spinner";
 
 const Assistant = ({ toggle, setPromptText }) => {
   const [prompt, setPrompt] = useState("");
   const [aiText, setAiText] = useState("");
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(true);
   const handlePromptGeneration = async () => {
     // Call the generateText function here
+    setLoading(true);
     await generateText(prompt)
       .then((text) => {
         setPrompt("");
+        setLoading(false);
         setAiText(text);
       })
       .catch((err) => {
@@ -57,48 +61,53 @@ const Assistant = ({ toggle, setPromptText }) => {
       <Button
         onClick={handlePromptGeneration}
         className="self-end"
-        disabled={aiText.length > 0 && prompt.length === 0}
+        disabled={aiText.length > 0 || prompt.length === 0 || loading}
       >
         <FaWandMagicSparkles />
         <span>Generate</span>
       </Button>
 
-      {aiText && (
-        <div className="p-2">
-          <h2 className="font-bold">AI Generated Text</h2>
-          <div className="p-2 text-pretty">
-            <Textarea rows={15} cols={20} readOnly value={aiText} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        aiText && (
+          <div className="p-2">
+            <h2 className="font-bold">AI Generated Text</h2>
+            <div className="p-2 text-pretty">
+              <Spinner />
+              <Textarea rows={15} cols={20} readOnly value={aiText} />
+            </div>
+            <div className="flex justify-between items-center p-2">
+              <Button
+                onClick={() => {
+                  navigator.clipboard.writeText(aiText);
+                  setCopied(true);
+                  setTimeout(() => {
+                    setCopied(false);
+                  }, 3000);
+                }}
+              >
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      {copied ? <FaCheck color="green" /> : <FaCopy />}
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {copied ? <p>Copied</p> : <p>Copy to Clipboard?</p>}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </Button>
+              <Button
+                onClick={() => {
+                  setPromptText(aiText);
+                }}
+              >
+                Insert
+              </Button>
+            </div>
           </div>
-          <div className="flex justify-between items-center p-2">
-            <Button
-              onClick={() => {
-                navigator.clipboard.writeText(aiText);
-                setCopied(true);
-                setTimeout(() => {
-                  setCopied(false);
-                }, 3000);
-              }}
-            >
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    {copied ? <FaCheck color="green" /> : <FaCopy />}
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {copied ? <p>Copied</p> : <p>Copy to Clipboard?</p>}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </Button>
-            <Button
-              onClick={() => {
-                setPromptText(aiText);
-              }}
-            >
-              Insert
-            </Button>
-          </div>
-        </div>
+        )
       )}
     </div>
   );
