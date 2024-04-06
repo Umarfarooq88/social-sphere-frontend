@@ -12,6 +12,8 @@ const Page = () => {
   isUserLoggedIn();
 
   const [activeScreen, setActiveScreen] = useState("Create");
+  const [collapsed, setCollapsed] = useState(false); // State to track collapse/expand
+
   const renderComponent = () => {
     switch (activeScreen) {
       case "Create":
@@ -26,17 +28,19 @@ const Page = () => {
         return <></>;
     }
   };
-
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+  };
   return (
     <div className="flex flex-col justify-between h-screen">
-      {" "}
-      {/* Added h-screen to fill the screen height */}
-      <div className="w-1/5 flex-shrink-0">
-        <Sidebar setActiveScreen={setActiveScreen} />
+      <div className={`w-1/5 flex-shrink-0 ${collapsed ? "w-12" : "w-72"}`}>
+        <Sidebar
+          setActiveScreen={setActiveScreen}
+          toggleCollapse={toggleCollapse}
+          collapsed={collapsed}
+        />
       </div>
-      <div className="flex-1 overflow-auto">
-        {" "}
-        {/* Added overflow-auto to enable scrolling */}
+      <div className={`flex-1 overflow-auto ${collapsed ? "ml-12" : "ml-72"}`}>
         {renderComponent()}
       </div>
     </div>

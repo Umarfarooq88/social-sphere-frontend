@@ -33,14 +33,19 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex justify-center items-center bg-gray-200 bg-opacity-50">
       {/* Assistant view */}
       {assistantView && (
         <div className="p-5 h-screen relative">
-          <Assistant toggle={setAssistantView} setPromptText={""} />
+          <Assistant
+            toggle={setAssistantView}
+            setPromptText={() => {
+              ("");
+            }}
+          />
         </div>
       )}
-      <div className="bg-white p-8 w-1/2 h-auto rounded-lg">
+      <div className="bg-white dark:bg-black p-8 w-1/2 h-auto rounded-lg">
         <div className="flex justify-between mb-4">
           <h2 className="text-lg font-bold">Create Post</h2>
           <div className="relative">
