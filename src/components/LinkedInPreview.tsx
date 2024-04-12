@@ -4,7 +4,10 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { FaWandMagicSparkles } from "react-icons/fa6";
 
-const LinkedInPreview = ({ toggle }) => {
+type LinkedInPreviewProps = {
+  toggle: (value: boolean) => void;
+};
+const LinkedInPreview = ({ toggle }: LinkedInPreviewProps) => {
   const [prompt, setPrompt] = useState("");
   return (
     <div className="bg-white w-fit h-full flex flex-col justify-start  p-10 rounded-xl">

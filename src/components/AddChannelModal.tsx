@@ -135,7 +135,7 @@ const AddChannelModal = () => {
       <h2 className="text-2xl mb-4 text-center pt-40">
         Add New Social Account
       </h2>
-      <div className="flex flex-col w-full p-5 justify-center">
+      <div className="flex p-5 justify-center items-center ">
         <Button
           onClick={handleLinkedInClick}
           className="bg-blue-500 hover:bg-blue-700 text-white m-5 rounded-lg transition duration-300"
