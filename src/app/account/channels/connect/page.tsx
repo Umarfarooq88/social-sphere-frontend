@@ -5,7 +5,10 @@ import { isUserLoggedIn } from "@/lib/utils";
 
 const Page = () => {
   useEffect(() => {
-    isUserLoggedIn();
+    const checkUser = async () => {
+      isUserLoggedIn();
+    };
+    checkUser();
   }, []);
 
   return (

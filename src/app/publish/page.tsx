@@ -30,7 +30,10 @@ const Page = () => {
   };
 
   useEffect(() => {
-    isUserLoggedIn();
+    const checkUser = async () => {
+      isUserLoggedIn();
+    };
+    checkUser();
   }, []);
   return (
     <div className="flex flex-col justify-between h-screen">

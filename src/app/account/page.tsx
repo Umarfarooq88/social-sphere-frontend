@@ -4,7 +4,10 @@ import React, { useEffect } from "react";
 
 const Page = () => {
   useEffect(() => {
-    isUserLoggedIn();
+    const checkUser = async () => {
+      isUserLoggedIn();
+    };
+    checkUser();
   }, []);
   return <div>Page</div>;
 };
