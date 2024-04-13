@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import AddChannelModal from "@/components/AddChannelModal";
 import { isUserLoggedIn } from "@/lib/utils";
 
 const Page = () => {
-  isUserLoggedIn();
+  useEffect(() => {
+    isUserLoggedIn();
+  }, []);
 
   return (
     <div>

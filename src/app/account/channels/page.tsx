@@ -1,9 +1,12 @@
+"use client";
 import { isUserLoggedIn } from "@/lib/utils";
-import React from "react";
+import React, { useEffect } from "react";
 
-const page = () => {
-  isUserLoggedIn();
-  return <div>page</div>;
+const Page = () => {
+  useEffect(() => {
+    isUserLoggedIn();
+  }, []);
+  return <div>Page</div>;
 };
 
-export default page;
+export default Page;

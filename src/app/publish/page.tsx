@@ -5,12 +5,9 @@ import ManageTags from "@/components/ManageTags";
 import Settings from "@/components/Settings";
 import Sidebar from "@/components/Sidebar";
 import { isUserLoggedIn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Page = () => {
-  // Check if user is loggedIn, If No then redirect to login page
-  isUserLoggedIn();
-
   const [activeScreen, setActiveScreen] = useState("Create");
   const [collapsed, setCollapsed] = useState(false); // State to track collapse/expand
 
@@ -31,6 +28,10 @@ const Page = () => {
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
   };
+
+  useEffect(() => {
+    isUserLoggedIn();
+  }, []);
   return (
     <div className="flex flex-col justify-between h-screen">
       <div className={`w-1/5 flex-shrink-0 ${collapsed ? "w-12" : "w-72"}`}>
