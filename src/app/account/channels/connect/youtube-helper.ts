@@ -8,7 +8,7 @@ interface OAuthParams {
   [key: string]: string; // Index signature to allow access using string keys
 }
 
-const YOUR_CLIENT_ID = '508863026199-u92koko0tkfeopenvpfl3od1otajecsf.apps.googleusercontent.com';
+const YOUR_CLIENT_ID = '';
 const YOUR_REDIRECT_URI = 'https://true-geese-exist.loca.lt';
 
 
