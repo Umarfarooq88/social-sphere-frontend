@@ -4,7 +4,7 @@ import { getCookie, setCookie } from "cookies-next";
 import api from "@/lib/api";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
-
+import { trySampleRequest } from "@/app/account/channels/connect/youtube-helper";
 const AddChannelModal = () => {
   const router = useRouter();
   const [codeExchanged, setCodeExchanged] = useState(false);
@@ -127,6 +127,7 @@ const AddChannelModal = () => {
   };
 
   const handleYouTubeClick = () => {
+    trySampleRequest()
     console.log("YouTube button clicked");
   };
 
