@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaWandMagicSparkles } from "react-icons/fa6";
+import { FaLinkedin, FaWandMagicSparkles, FaYoutube } from "react-icons/fa6";
 import { Button } from "./ui/button";
 import { Calendar, Settings, SquarePen, Tags } from "lucide-react";
 import {
@@ -14,7 +14,7 @@ import ChannelModal from "./social/linkedIn/ChannelModal";
 import { Skeleton } from "./ui/skeleton";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 import { GrChannel } from "react-icons/gr";
-import { Separator } from "./ui/separator";
+
 type setActiveScreenFuction = (name: string) => void;
 
 interface Props {
@@ -117,6 +117,16 @@ const Sidebar: React.FC<Props> = ({
       {collapsed ? (
         <div className="flex flex-col justify-center items-center p-5">
           <GrChannel />
+          <div className="p-5 hover:cursor-pointer">
+            {channels.map((item) => {
+              switch (item.channelName) {
+                case "LinkedIn":
+                  return <FaLinkedin color="blue" size={25} />;
+                case "YouTube":
+                  return <FaYoutube color="red" size={25} />;
+              }
+            })}
+          </div>
         </div>
       ) : (
         // Render this part only when not collapsed

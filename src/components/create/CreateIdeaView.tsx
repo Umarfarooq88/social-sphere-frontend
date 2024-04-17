@@ -110,7 +110,6 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
         <div className="flex justify-between items-center ">
           <div className="flex justify-between items-center px-10 py-0">
             <span className="font-bold pr-5">New Idea</span>
-            <Tags />
           </div>
           <div className="flex justify-end p-5">
             {textContent.length === 0 || mediaUploaded ? (

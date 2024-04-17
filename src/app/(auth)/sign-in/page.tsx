@@ -76,7 +76,7 @@ const Page = () => {
         setSuccess("You have successfully logged in");
         setTimeout(() => {
           router.push("/");
-        }, 3000);
+        }, 1000);
       }
     } catch (err) {
       setError("Invalid credentials, Retry with correct credentials");
