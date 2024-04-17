@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import api from "@/lib/api";
+import api from "@/lib/utils/api";
 import FileInput from "./FileInput";
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
 import { AiOutlineClose } from "react-icons/ai";
-import Assistant from "./Assistant";
+import Assistant from "../Assistant";
 import { useToast } from "@/components/ui/use-toast";
 import { BeatLoader } from "react-spinners";
 

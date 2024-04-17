@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { SchedulerEvent } from "smart-webcomponents-react";
 import "smart-webcomponents-react/source/styles/smart.default.css";
-import CreatePost from "./CreatePost";
+import CreatePost from "./create/CreatePost";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 

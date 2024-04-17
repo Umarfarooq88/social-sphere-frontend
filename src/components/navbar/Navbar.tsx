@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { ModeToggle } from "./ModeToggle";
+import { ModeToggle } from "../theme/ModeToggle";
 import Avatar from "./Avatar";
 import { usePathname } from "next/navigation";
-import { getUserEmail, isAccessTokenExpired } from "@/lib/tokens";
-import { Button } from "./ui/button";
+import { getUserEmail, isAccessTokenExpired } from "@/lib/utils/tokens";
+import { Button } from "../ui/button";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -32,9 +32,9 @@ const Navbar = () => {
 
           {/* UL tags for larger screens */}
           <div className="hidden md:flex md:items-center md:space-x-4 p-2">
-            <ul className="flex space-x-10 justify-between lg:text-xl ml-80">
+            <ul className="flex space-x-20 justify-between items-center lg:text-xl ml-96">
               <li>
-                <a
+                <Link
                   href="/publish"
                   className={
                     pathName === "/publish"
@@ -42,11 +42,11 @@ const Navbar = () => {
                       : ` dark:text-gray-300 hover:text-gray-500 dark:hover:text-white  text-slate-500 transition duration-300`
                   }
                 >
-                  Publishing
-                </a>
+                  Publish
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/analytics"
                   className={
                     pathName === "/analytics"
@@ -55,9 +55,9 @@ const Navbar = () => {
                   }
                 >
                   Analytics
-                </a>
+                </Link>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="/engagement"
                   className={
@@ -68,7 +68,7 @@ const Navbar = () => {
                 >
                   Engagement
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -109,7 +109,7 @@ const Navbar = () => {
             <>
               <div className="flex justify-between items-center">
                 <Button className="mx-2">
-                  <Link href="/sign-in">Login</Link>
+                  <Link href="/sign-in">Sign In</Link>
                 </Button>
                 <Button className="mx-2">
                   <Link href="/sign-up">SignUp</Link>
@@ -136,7 +136,7 @@ const Navbar = () => {
             <ul className="flex flex-col space-y-5 p-4">
               <li>
                 <a href="#" className="block">
-                  Publishing
+                  Publish
                 </a>
               </li>
               <li>
@@ -144,17 +144,17 @@ const Navbar = () => {
                   Analytics
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#" className="block">
                   Engagement
                 </a>
-              </li>
+              </li> */}
             </ul>
             {isAccessTokenExpired() ? (
               <>
                 <div className="flex justify-between items-center">
                   <Button className="mx-2">
-                    <Link href="/sign-in">Login</Link>
+                    <Link href="/sign-in">Sign In</Link>
                   </Button>
                   <Button className="mx-2">
                     <Link href="/sign-up">SignUp</Link>
