@@ -1,5 +1,5 @@
 "use client";
-import { isUserLoggedIn } from "@/lib/utils";
+import { isUserLoggedIn } from "@/lib/utils/utils";
 import React, { useEffect } from "react";
 
 const Page = () => {

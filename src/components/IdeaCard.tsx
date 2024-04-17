@@ -1,4 +1,4 @@
-import api from "@/lib/api";
+import api from "@/lib/utils/api";
 import { Trash } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import {

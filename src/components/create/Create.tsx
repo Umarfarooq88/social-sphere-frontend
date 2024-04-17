@@ -1,15 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { FaWandMagic } from "react-icons/fa6";
-import { Button } from "./ui/button";
-import IdeaCard from "./IdeaCard";
-import Tags from "./Tags";
+import { Button } from "../ui/button";
+import IdeaCard from "../IdeaCard";
 import CreateIdeaView from "./CreateIdeaView";
-import api from "@/lib/api";
-import Assistant from "./Assistant";
+import api from "@/lib/utils/api";
+import Assistant from "../Assistant";
+import { CiSearch } from "react-icons/ci";
 
+type Idea = { image: ""; content: ""; _id: "" };
 const Create = () => {
-  const [ideas, setIdeas] = useState([{ image: "", content: "", _id: "" }]);
+  const [ideas, setIdeas] = useState([] as Idea[]);
   const getIdeas = async () => {
     try {
       const response = await api.get(`/ideas/get-ideas`);
@@ -54,19 +55,28 @@ const Create = () => {
           <Button onClick={handleClick}>Create Idea</Button>
         </div>
       </div>
-      <main className="p-2 m-2 grid lg:grid-cols-3 gap-9">
-        {ideas.map((value, index: number) => {
-          return (
-            <IdeaCard
-              img={value.image}
-              text={value.content}
-              id={value._id}
-              triggerFetch={fetchData}
-              key={index}
-            />
-          );
-        })}
-      </main>
+      {ideas.length === 0 ? (
+        <div className=" h-full flex justify-center items-center">
+          <div className="flex flex-col justify-between items-center text-center text-2xl font-bold">
+            <CiSearch size={35} className="m-5" />
+            <p> No ideas found</p>
+          </div>
+        </div>
+      ) : (
+        <main className="p-2 m-2 grid lg:grid-cols-3 gap-9">
+          {ideas.map((value, index: number) => {
+            return (
+              <IdeaCard
+                img={value.image}
+                text={value.content}
+                id={value._id}
+                triggerFetch={fetchData}
+                key={index}
+              />
+            );
+          })}
+        </main>
+      )}
       {createIdeaView && <CreateIdeaView toggle={handleClick} />}
       {generateIdeaView && (
         <div className="fixed flex justify-between items-center inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">

@@ -14,7 +14,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { GrChannel } from "react-icons/gr";
 import { IoIosSettings } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
-import { deleteUserCookies } from "@/lib/tokens";
+import { deleteUserCookies } from "@/lib/utils/tokens";
 
 interface AvatarProps {
   email: string | null | undefined;

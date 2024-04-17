@@ -1,10 +1,8 @@
 "use client";
 import Calendar from "@/components/Calendar";
-import Create from "@/components/Create";
-import ManageTags from "@/components/ManageTags";
-import Settings from "@/components/Settings";
+import Create from "@/components/create/Create";
 import Sidebar from "@/components/Sidebar";
-import { isUserLoggedIn } from "@/lib/utils";
+import { isUserLoggedIn } from "@/lib/utils/utils";
 import React, { useEffect, useState } from "react";
 
 const Page = () => {
@@ -17,10 +15,6 @@ const Page = () => {
         return <Create />;
       case "Calendar":
         return <Calendar />;
-      case "Settings":
-        return <Settings />;
-      case "Tags":
-        return <ManageTags />;
       default:
         return <></>;
     }

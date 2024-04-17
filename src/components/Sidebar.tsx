@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaWandMagicSparkles } from "react-icons/fa6";
+import { FaLinkedin, FaWandMagicSparkles, FaYoutube } from "react-icons/fa6";
 import { Button } from "./ui/button";
 import { Calendar, Settings, SquarePen, Tags } from "lucide-react";
 import {
@@ -9,10 +9,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useRouter } from "next/navigation";
-import api from "@/lib/api";
+import api from "@/lib/utils/api";
 import ChannelModal from "./social/linkedIn/ChannelModal";
 import { Skeleton } from "./ui/skeleton";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
+import { GrChannel } from "react-icons/gr";
+
 type setActiveScreenFuction = (name: string) => void;
 
 interface Props {
@@ -21,24 +23,23 @@ interface Props {
   toggleCollapse: () => void;
 }
 
+type Channel = {
+  profilePicture: string;
+  channelName: string;
+  accessToken: string;
+  sub: string;
+  userEmail: string;
+  userName: string;
+};
 const Sidebar: React.FC<Props> = ({
   setActiveScreen,
   collapsed,
   toggleCollapse,
 }) => {
   const [loading, setLoading] = useState(true);
-  const [channels, setChannels] = useState([
-    {
-      profilePicture: "",
-      channelName: "",
-      accessToken: "",
-      sub: "",
-      userEmail: "",
-      userName: "",
-    },
-  ]);
+  const [channels, setChannels] = useState([] as Channel[]);
   const router = useRouter();
-  const [active, setActive] = useState<string>("");
+  const [active, setActive] = useState<string>("Create");
 
   const handleActive = (name: string) => {
     setActive(name);
@@ -69,21 +70,21 @@ const Sidebar: React.FC<Props> = ({
 
   return (
     <div
-      className={`fixed top-0 mt-[68px] bg-stone-800 text-white dark:bg-zinc-800 dark:text-white h-screen w-72 flex flex-col overflow-hidden ${
-        collapsed ? "w-14 flex flex-col " : ""
+      className={`fixed top-0 mt-[68px] bg-stone-800 text-white dark:bg-zinc-800 dark:text-white h-screen flex flex-col overflow-hidden ${
+        collapsed ? "w-14" : "w-72"
       }`}
     >
       {/* Collapse/Expand button */}
-      <button
+      <div
         onClick={toggleCollapse}
-        className={` p-2 px-4 flex justify-end  transition duration-300`}
+        className="p-2 px-4 flex justify-end  transition duration-300 hover:cursor-pointer"
       >
         {collapsed ? (
           <FaAngleDoubleRight size={30} />
         ) : (
           <FaAngleDoubleLeft size={30} />
         )}
-      </button>
+      </div>
       <header className="p-2">
         <div
           className={`${
@@ -113,30 +114,51 @@ const Sidebar: React.FC<Props> = ({
         <hr />
       </header>
 
-      {!collapsed && ( // Render this part only when not collapsed
+      {collapsed ? (
+        <div className="flex flex-col justify-center items-center p-5">
+          <GrChannel />
+          <div className="p-5 hover:cursor-pointer">
+            {channels.map((item) => {
+              switch (item.channelName) {
+                case "LinkedIn":
+                  return <FaLinkedin color="blue" size={25} />;
+                case "YouTube":
+                  return <FaYoutube color="red" size={25} />;
+              }
+            })}
+          </div>
+        </div>
+      ) : (
+        // Render this part only when not collapsed
         <Accordion type="single" collapsible className="px-5 overflow-y-auto">
           <AccordionItem value="channels">
             <AccordionTrigger onClick={getChannels}>Channels</AccordionTrigger>
             <AccordionContent>
               {"Connected channels 👇"}
               <ul className="flex-1 my-2">
-                {channels.map((item, index) => (
-                  <li key={index} className="">
-                    {loading ? (
-                      <div className="flex justify-start items-center my-5">
-                        <Skeleton className="w-10 h-10 rounded-full mx-5" />
-                        <Skeleton className="w-40 h-10 rounded-xl" />
-                      </div>
-                    ) : (
-                      <>
-                        <ChannelModal
-                          imgURL={item?.profilePicture}
-                          name={item?.channelName}
-                        />
-                      </>
-                    )}
-                  </li>
-                ))}
+                {channels.length === 0 ? (
+                  <div className="flex justify-center items-center p-5">
+                    <span>{"No channels connected yet"}</span>
+                  </div>
+                ) : (
+                  channels.map((item, index) => (
+                    <li key={index} className="">
+                      {loading ? (
+                        <div className="flex justify-start items-center my-5">
+                          <Skeleton className="w-10 h-10 rounded-full mx-5" />
+                          <Skeleton className="w-40 h-10 rounded-xl" />
+                        </div>
+                      ) : (
+                        <>
+                          <ChannelModal
+                            imgURL={item?.profilePicture}
+                            name={item?.channelName}
+                          />
+                        </>
+                      )}
+                    </li>
+                  ))
+                )}
               </ul>
               <div className="flex flex-col justify-between">
                 <span>{"Connect a channel to get started 👇"}</span>
@@ -157,24 +179,13 @@ const Sidebar: React.FC<Props> = ({
       <footer className="absolute bottom-24 w-full">
         <div
           className={`${
-            active === "Tags" ? onSelectStyle : ""
-          } flex   items-center p-3 mx-2 hover:cursor-pointer`}
-          onClick={() => handleActive("Tags")}
-        >
-          <Tags size={20} />
-          <span className={`text-xl px-2 ${collapsed ? "hidden" : ""}`}>
-            Manage Tags
-          </span>
-        </div>
-        <div
-          className={`${
-            active === "New Channel" ? onSelectStyle : ""
+            active === "Settings" ? onSelectStyle : ""
           } flex justify-start items-center p-3 mx-2 hover:cursor-pointer`}
-          onClick={() => handleActive("New Channel")}
+          onClick={() => router.push("/account/settings")}
         >
           <Settings size={20} />
           <span className={`text-xl px-2 ${collapsed ? "hidden" : ""}`}>
-            New Channel
+            Settings
           </span>
         </div>
       </footer>
