@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteUserCookies, setUserCookies } from "../tokens";
+import { deleteUserCookies, setUserCookies } from "../../utils/tokens";
 
 interface UserState {
     user: {

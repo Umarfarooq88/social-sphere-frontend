@@ -3,7 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { FaCheck, FaCopy, FaWandMagicSparkles } from "react-icons/fa6";
-import generateText from "@/lib/gemini";
+import generateText from "@/lib/utils/gemini";
 import {
   Tooltip,
   TooltipContent,

@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import Tags from "./Tags";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 import FileInput from "./FileInput";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,12 +15,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import api from "@/lib/api";
-import { Divide, Terminal } from "lucide-react";
+import api from "@/lib/utils/api";
+import { Terminal } from "lucide-react";
 import { AiOutlineClose } from "react-icons/ai";
-import Assistant from "./Assistant";
+import Assistant from "../Assistant";
 import { FaWandMagicSparkles } from "react-icons/fa6";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 type CreateIdeaViewProps = {
   toggle: () => void;
 };
