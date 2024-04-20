@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import { isUserLoggedIn } from "@/lib/utils/utils";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { exchangeAuthorizationCodeForToken } from "./linkedIn-helper";
+import {
+  createChannel,
+  exchangeAuthorizationCodeForToken,
+} from "./linkedIn-helper";
+import { trySampleRequest } from "./youtube-helper";
 
 const Page = () => {
   const router = useRouter();
@@ -41,6 +45,7 @@ const Page = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const authorizationCode = urlParams.get("code");
     const returnedState = urlParams.get("state");
+    const youtubeAccessToken = urlParams.get("access_token");
 
     if (authorizationCode && returnedState && !codeExchanged) {
       // Set the codeExchanged flag to true to prevent further processing
@@ -49,10 +54,14 @@ const Page = () => {
       window.history.replaceState({}, document.title, window.location.pathname);
       router.push("/publish");
     }
+    if (youtubeAccessToken) {
+      createChannel("YouTube", youtubeAccessToken);
+    }
   }, []);
 
   const handleYouTubeClick = () => {
     console.log("YouTube button clicked");
+    trySampleRequest();
   };
 
   return (

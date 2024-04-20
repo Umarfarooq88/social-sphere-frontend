@@ -8,15 +8,20 @@ interface OAuthParams {
   [key: string]: string; // Index signature to allow access using string keys
 }
 
-const YOUR_CLIENT_ID = '';
-const YOUR_REDIRECT_URI = 'https://true-geese-exist.loca.lt';
+
 
 
  export const trySampleRequest = () => {
+  const YOUTUBE_CLIENT_ID = process.env.NEXT_PUBLIC_YOUTUBE_CLIENT_ID || "";
+  const YOUTUBE_REDIRECT_URI = process.env.NEXT_PUBLIC_YOUTUBE_REDIRECT_URI || "";
+
+  console.log(YOUTUBE_CLIENT_ID);
+  console.log(YOUTUBE_REDIRECT_URI)
+
     const fragmentString = location.hash.substring(1);
     const params: OAuthParams = {
-      client_id: YOUR_CLIENT_ID,
-      redirect_uri: YOUR_REDIRECT_URI,
+      client_id: YOUTUBE_CLIENT_ID,
+      redirect_uri: YOUTUBE_REDIRECT_URI,
       scope: 'https://www.googleapis.com/auth/youtube.force-ssl',
       state: 'try_sample_request',
       include_granted_scopes: 'true',
@@ -62,14 +67,19 @@ const YOUR_REDIRECT_URI = 'https://true-geese-exist.loca.lt';
   };
 
   const oauth2SignIn = () => {
+    const YOUTUBE_CLIENT_ID = process.env.NEXT_PUBLIC_YOUTUBE_CLIENT_ID || "";
+const YOUTUBE_REDIRECT_URI = process.env.NEXT_PUBLIC_YOUTUBE_REDIRECT_URI || "";
+
+  console.log(YOUTUBE_CLIENT_ID);
+  console.log(YOUTUBE_REDIRECT_URI)
     const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
     const form = document.createElement('form');
     form.setAttribute('method', 'GET');
     form.setAttribute('action', oauth2Endpoint);
 
     const params: OAuthParams = {
-      client_id: YOUR_CLIENT_ID,
-      redirect_uri: YOUR_REDIRECT_URI,
+      client_id: YOUTUBE_CLIENT_ID,
+      redirect_uri: YOUTUBE_REDIRECT_URI,
       scope: 'https://www.googleapis.com/auth/youtube.force-ssl',
       state: 'try_sample_request',
       include_granted_scopes: 'true',
