@@ -130,6 +130,14 @@ const Page = () => {
               )}
             />
             <Button type="submit">Submit</Button>
+            <div className="p-2">
+              <p className="text-center text-sm">
+                {"Already have an account? "}
+                <a href="/sign-in" className="text-blue-500">
+                  Sign In
+                </a>
+              </p>
+            </div>
           </form>
         </Form>
       </div>

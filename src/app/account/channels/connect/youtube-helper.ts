@@ -9,8 +9,8 @@ interface OAuthParams {
     [key: string]: string;  
 }
   
-const YOUTUBE_CLIENT_ID = process.env.YOUTUBE_CLIENT_ID || '';
-const YOUTUBE_REDIRECT_URI = process.env.YOUTUBE_REDIRECT_URI || '';
+const YOUTUBE_CLIENT_ID = process.env.NEXT_PUBLIC_YOUTUBE_CLIENT_ID || '';
+const YOUTUBE_REDIRECT_URI = process.env.NEXT_PUBLIC_YOUTUBE_REDIRECT_URI || '';
   
   
 export const trySampleRequest = () => {
