@@ -75,7 +75,7 @@ const Page = () => {
       if (response.status === 200) {
         setSuccess("You have successfully logged in");
         setTimeout(() => {
-          router.push("/");
+          router.push("/publish");
         }, 1000);
       }
     } catch (err) {

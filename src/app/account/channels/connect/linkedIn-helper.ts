@@ -25,7 +25,7 @@ const exchangeAuthorizationCodeForToken = async (
           console.log("accessToken", accessToken);
 
           // Calling post request to DB for access token channel name
-          const createChannelResponse = await createChannel(accessToken);
+          const createChannelResponse = await createChannel("LinkedIn",accessToken);
 
           if (
             createChannelResponse?.status === 201 ||
@@ -57,10 +57,10 @@ const exchangeAuthorizationCodeForToken = async (
 };
 
 // Sending access token and channelName to DB
-const createChannel = async (accessToken: string) => {
+const createChannel = async (channelName:string ,accessToken: string) => {
         try {
           const response = await api.post("users/channel/create-channel", {
-            channelName: "LinkedIn",
+            channelName: channelName,
             accessToken: accessToken,
           });
           console.log("Channel created:", response.data);
