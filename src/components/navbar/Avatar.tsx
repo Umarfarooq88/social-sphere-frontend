@@ -39,7 +39,7 @@ const Avatar = ({ email, imageUrl, altText }: AvatarProps) => {
           <DropdownMenuTrigger>
             <div className="flex justify-between items-center">
               <Image
-                src={imageUrl}
+                src={"/team/tahmeer.jpg"}
                 width={45}
                 height={45}
                 alt={altText}

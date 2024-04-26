@@ -75,11 +75,11 @@ export const CardStack = ({
 function Avatar(props: any) {
   return (
     <div className="flex items-center mt-8 space-x-3 ">
-      <div className="flex-shrink-0 overflow-hidden rounded-full w-20 h-20">
+      <div className="flex-shrink-0 overflow-hidden rounded-full w-16 h-16">
         <Image
           src={props.image}
-          width="80"
-          height="80"
+          width="70"
+          height="70"
           alt="Avatar"
           placeholder="blur"
         />

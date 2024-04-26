@@ -7,9 +7,11 @@ import { usePathname } from "next/navigation";
 import { getUserEmail, isAccessTokenExpired } from "@/lib/utils/tokens";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme } = useTheme();
   const pathName = usePathname();
   const userEmail = getUserEmail();
   const toggleMenu = () => {
@@ -22,12 +24,32 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
           <Link href={"/"} className="flex-shrink-0 absolute left-10">
-            <Image
-              src="/logo/svg/logo-color.svg"
-              alt="logo"
-              width={50}
-              height={50}
-            />
+            <div>
+              {" "}
+              <Link
+                href="/"
+                className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100"
+              >
+                {theme === "light" ? (
+                  <Image
+                    src="/logo-dark.png"
+                    alt="N"
+                    width="32"
+                    height="32"
+                    className="w-8"
+                  />
+                ) : (
+                  <Image
+                    src="/logo-light.png"
+                    alt="N"
+                    width="32"
+                    height="32"
+                    className="w-8"
+                  />
+                )}
+                <span>Social Sphere</span>
+              </Link>
+            </div>
           </Link>
 
           {/* UL tags for larger screens */}
@@ -167,7 +189,7 @@ const Navbar = () => {
                   <ModeToggle />
                   <Avatar
                     email={userEmail}
-                    imageUrl={"/logo/svg/logo-color.svg"}
+                    imageUrl={"/logo-dark.png"}
                     altText={"user-profile"}
                   />
                 </div>
