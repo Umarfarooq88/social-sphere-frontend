@@ -72,7 +72,7 @@ export const CardStack = ({
   );
 };
 
-function Avatar(props: any) {
+export function Avatar(props: any) {
   return (
     <div className="flex items-center mt-8 space-x-3 ">
       <div className="flex-shrink-0 overflow-hidden rounded-full w-16 h-16">
