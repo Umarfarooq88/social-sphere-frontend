@@ -16,9 +16,9 @@ const details = [
     name: "Umar Farooq",
     title: "Frontend Developer | API Integration",
     image: "/team/umar.jpg",
-    linkedIn: "",
-    github: "",
-    twitter: "",
+    linkedin: "https://www.linkedin.com/in/umar-farooq-b47b98217/",
+    github: "https://github.com/Umarfarooq88",
+    twitter: "https://twitter.com/Umar_farooq81",
   },
   {
     name: "Syed Sarkheel Baseer",
