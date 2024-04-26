@@ -30,11 +30,12 @@ const CARDS: Card[] = [
   {
     id: 0,
     name: "Manu Arora",
-    designation: "Senior Software Engineer",
+    designation: "Coding content creator",
     content: (
       <p>
-        These cards are amazing, <Highlight>I want to use them</Highlight> in my
-        project. Framer motion is a godsend ngl tbh fam 🙏
+        Social Sphere streamlines my content creation with its
+        <Highlight>user-friendly interface and AI tools</Highlight>. The
+        analytics help me refine my strategy and engage my audience effectively
       </p>
     ),
     image: userOneImg as any,
@@ -42,13 +43,12 @@ const CARDS: Card[] = [
   {
     id: 1,
     name: "Elon Musk",
-    designation: "Senior Shitposter",
+    designation: "Twitter Influencer",
     content: (
       <p>
-        I dont like this Twitter thing,{" "}
-        <Highlight>deleting it right away</Highlight> because yolo. Instead, I
-        would like to call it <Highlight>X.com</Highlight> so that it can easily
-        be confused with adult sites.
+        Social Sphere is intuitive and packed with features, making content
+        management a breeze. The <Highlight> analytics tools</Highlight> are
+        instrumental in understanding trends and optimizing engagement
       </p>
     ),
     image: userTwoImg as any,
@@ -56,14 +56,13 @@ const CARDS: Card[] = [
   {
     id: 2,
     name: "Tyler Durden",
-    designation: "Manager Project Mayhem",
+    designation: "Solo Entrepreneur | Youtuber",
     content: (
       <p>
-        The first rule of
-        <Highlight>Fight Club</Highlight> is that you do not talk about fight
-        club. The second rule of
-        <Highlight>Fight club</Highlight> is that you DO NOT TALK about fight
-        club.
+        Social Sphere revolutionizes my
+        <Highlight>business content management</Highlight>, allowing effortless
+        creation and scheduling. The analytics insights tailor my content to
+        customer preferences.
       </p>
     ),
     image: userThreeImg as any,

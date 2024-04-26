@@ -14,15 +14,23 @@ import Testimonials from "../components/landing-page/testimonials";
 import Faq from "../components/landing-page/faq";
 import { FollowerPointerCard } from "@/components/ui/following-pointer";
 import { TracingBeam } from "@/components/ui/tracing-beam";
+import Team from "@/components/landing-page/team";
 
 const Home = () => {
   return (
     <>
-      <TracingBeam className="w-full right-0">
+      <TracingBeam className="w-full right-0 scroll-smooth">
         <FollowerPointerCard>
           <Navbar />
           <Hero />
-          <SectionTitle pretitle="Our Services" title=" Why choose us?">
+          <SectionTitle id={"team"} pretitle="About US" title="Meet the Team">
+            <Team />
+          </SectionTitle>
+          <SectionTitle
+            id={"services"}
+            pretitle="Our Services"
+            title=" Why choose us?"
+          >
             Choose Social Sphere to simplify content creation, boost efficiency,
             and gain valuable insights with our user-friendly platform and
             powerful analytics tools.
@@ -38,11 +46,16 @@ const Home = () => {
             <Video />
           </SectionTitle>
           <SectionTitle
+            id={"testimonials"}
             pretitle="Testimonials"
             title="Here's what our users said"
           ></SectionTitle>
           <Testimonials />
-          <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
+          <SectionTitle
+            id={"faqs"}
+            pretitle="FAQ"
+            title="Frequently Asked Questions"
+          >
             Answer your customers possible questions here, it will increase the
             conversion rate as well as support or chat requests.
           </SectionTitle>

@@ -32,8 +32,8 @@ const Hero = () => {
   ];
   return (
     <>
-      <Container className="flex flex-wrap ">
-        <div className="flex items-center w-full lg:w-1/2">
+      <Container className="flex flex-wrap">
+        <div className="flex items-center w-full lg:w-1/2" id="/">
           <div className="max-w-2xl mb-8">
             <TypewriterEffect words={words} className="text-3xl" />
             <p className="py-5 mx-10 text-xl leading-normal text-gray-500 lg:text-md xl:text-xl dark:text-gray-300">

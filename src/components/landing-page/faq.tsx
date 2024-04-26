@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
 
 const Faq = () => {
   return (
@@ -16,9 +16,7 @@ const Faq = () => {
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
                 <AccordionTrigger>{item.question}</AccordionTrigger>
-                <AccordionContent>
-                  {item.answer}
-                </AccordionContent>
+                <AccordionContent>{item.answer}</AccordionContent>
               </AccordionItem>
             </Accordion>
           </div>
@@ -26,26 +24,32 @@ const Faq = () => {
       </div>
     </Container>
   );
-}
+};
 
 const faqdata = [
   {
-    question: "Is this template completely free to use?",
-    answer: "Yes, this template is completely free to use.",
+    question: "Is this product completely free to use?",
+    answer: "Yes! as of now we are in beta testing so it'll be free till then",
   },
   {
-    question: "Can I use it in a commercial project?",
-    answer: "Yes, this you can.",
-  },
-  {
-    question: "What is your refund policy? ",
+    question: "How does Social Sphere simplify content creation?",
     answer:
-      "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
+      "Social Sphere offers a user-friendly interface and AI-powered tools that streamline the content creation process. From generating ideas to scheduling posts, our platform automates repetitive tasks, saving time and effort for content creators.",
   },
   {
-    question: "Do you offer technical support? ",
+    question: "What analytics insights does Social Sphere provide?",
     answer:
-      "No, we don't offer technical support for free downloads. Please purchase a support plan to get 6 months of support.",
+      "Social Sphere provides comprehensive analytics insights, including data on audience engagement, content performance, and trend analysis. Users can track metrics such as likes, shares, and comments to understand their audience better and optimize their content strategy accordingly.",
+  },
+  {
+    question: "Can I schedule posts in advance using Social Sphere?",
+    answer:
+      "Yes, Social Sphere allows users to schedule posts in advance across multiple social media platforms. Our scheduling feature enables content creators to plan their content calendar, ensuring consistent and timely posts to engage their audience effectively.",
+  },
+  {
+    question: "How does Social Sphere ensure user data security?",
+    answer:
+      "At Social Sphere, we prioritize the security and privacy of our users' data. We implement robust security measures to safeguard user information and comply with industry standards and regulations. Additionally, we provide users with options to control their privacy settings and manage their data securely.",
   },
 ];
 
