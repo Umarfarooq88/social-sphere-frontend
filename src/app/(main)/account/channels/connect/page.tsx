@@ -12,6 +12,7 @@ import { trySampleRequest } from "./youtube-helper";
 const Page = () => {
   const router = useRouter();
   const [codeExchanged, setCodeExchanged] = useState(false);
+  const [channelCreated, setChannelCreated] = useState(false);
 
   const generateRandomState = () => {
     // Generate a random string to use as the state parameter
@@ -42,10 +43,15 @@ const Page = () => {
       isUserLoggedIn();
     };
     checkUser();
+
     const urlParams = new URLSearchParams(window.location.search);
     const authorizationCode = urlParams.get("code");
     const returnedState = urlParams.get("state");
-    const youtubeAccessToken = urlParams.get("access_token");
+
+    // Extract access token from hash fragment
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const youtubeAccessToken = hashParams.get("access_token");
+    console.log("Youtube token:", youtubeAccessToken);
 
     if (authorizationCode && returnedState && !codeExchanged) {
       // Set the codeExchanged flag to true to prevent further processing
@@ -54,8 +60,12 @@ const Page = () => {
       window.history.replaceState({}, document.title, window.location.pathname);
       router.push("/publish");
     }
-    if (youtubeAccessToken) {
+
+    // Check if channel has been created already
+    if (youtubeAccessToken && !channelCreated) {
       createChannel("YouTube", youtubeAccessToken);
+      // Set channelCreated to true to prevent multiple requests
+      setChannelCreated(true);
     }
   }, []);
 
