@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import FileInput from "@/components/create/FileInput";
 import { Button } from "@/components/ui/button";
-import { authorize, uploadVideo } from "./youtube-post"; // Assuming these functions are correctly implemented
 import api from "@/lib/utils/api";
 
 const Popup = () => {
