@@ -12,7 +12,7 @@ const SCOPES = ['https://www.googleapis.com/auth/youtube.upload'];
 const TOKEN_PATH = 'token.json ';
 
 // Load client secrets from a local file.
-fs.readFile('client_secrets.json', (err, content:any) => {
+fs.readFile('client_secrets.json', (err, content) => {
   if (err) {
     return console.log('Error loading client secret file:', err);
   }
@@ -26,13 +26,13 @@ fs.readFile('client_secrets.json', (err, content:any) => {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials:any, callback:any) {
+function authorize(credentials, callback) {
   const { client_secret, client_id, redirect_uris } = credentials;
   const oAuth2Client = new google.auth.OAuth2(
     client_id, client_secret, redirect_uris[0]);
 
   // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token:any) => {
+  fs.readFile(TOKEN_PATH, (err, token) => {
     if (err) return getAccessToken(oAuth2Client, callback);
     oAuth2Client.setCredentials(JSON.parse(token));
     callback(oAuth2Client);
@@ -45,7 +45,7 @@ function authorize(credentials:any, callback:any) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-function getAccessToken(oAuth2Client:OAuth2Client, callback:any) {
+function getAccessToken(oAuth2Client, callback) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
@@ -55,9 +55,9 @@ function getAccessToken(oAuth2Client:OAuth2Client, callback:any) {
     input: process.stdin,
     output: process.stdout,
   });
-  rl.question('Enter the code from that page here: ', (code:any) => {
+  rl.question('Enter the code from that page here: ', (code) => {
     rl.close();
-    oAuth2Client.getToken(code, (err, token:any) => {
+    oAuth2Client.getToken(code, (err, token) => {
       if (err) return console.error('Error retrieving access token', err);
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
@@ -74,7 +74,7 @@ function getAccessToken(oAuth2Client:OAuth2Client, callback:any) {
  * Uploads a video to YouTube.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
- function uploadVideo(auth:OAuth2Client, textareaValue:string) {
+ function uploadVideo(auth, textareaValue) {
   const youtube = google.youtube({ version: 'v3', auth });
   const fileName = 'your_video.mp4'; // Specify the path to your video file
   const fileSize = fs.statSync(fileName).size;
@@ -100,7 +100,7 @@ function getAccessToken(oAuth2Client:OAuth2Client, callback:any) {
       // This is required when the `chunkSize` option is set to a value other than -1
       // Set it to the size of the file being uploaded
      maxContentLength:fileSize
-  }, (err: any, res: any) => {
+  }, (err, res) => {
       if (err) {
           console.error('Error uploading video:', err);
           return;

@@ -2,6 +2,7 @@
   "name": "social-sphere",
   "version": "0.1.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -50,6 +51,12 @@
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
   },
+
+  "babel": {
+    "presets": ["node_modules/babel"]
+  },
+
+
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",

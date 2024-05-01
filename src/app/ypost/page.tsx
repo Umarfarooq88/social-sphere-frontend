@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import FileInput from "@/components/create/FileInput";
 import { Button } from "@/components/ui/button";
-import { authorize,uploadVideo } from "./youtube-post";
-
+import { authorize, uploadVideo } from "./youtube-post"; // Assuming these functions are correctly implemented
+import api from "@/lib/utils/api";
 
 const Popup = () => {
   const [textareaValue, setTextareaValue] = useState('');
@@ -15,24 +15,37 @@ const Popup = () => {
   const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(event.target.value);
   };
+   const share=()=>{
+    handleMediaUpload();
+   }
 
-  const handleMediaUpload = (filePath: string) => {
-    setMediaUploaded(true);
-    setMediaFilePath(filePath);
+   
+  const handleMediaUpload = async (files: File[] = []) => {
+    try {
+      if (!files[0]) {
+        console.error("No files provided for upload.");
+        return;
+      } else {
+        setMediaUploaded(true);
+      }
+      const file = files[0];
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", textareaValue);
+    formData.append("video", file); // Assuming mediaFilePath contains the path to the uploaded video file
+    
+    // Upload video data
+   
+      const response = await api.post("youtube", formData);
+      console.log("Video uploaded successfully:", response.data);
+
+    } catch (error) {
+      console.error("Error uploading  video: ", error);
+  };
+    
   };
 
-  const handleCreatePost = () => {
-  authorize({
-    "client_id": "",
-    "client_secret": "",
-    "redirect_uris": [],
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://accounts.google.com/o/oauth2/token"
-  }, (oAuth2Client:any)=>{
-    if(!oAuth2Client) return;
-    uploadVideo(oAuth2Client, textareaValue)
-  })
-  };
+  
 
   const isButtonDisabled = () => {
     return textareaValue.length === 0 || title.length === 0 || !mediaUploaded;
@@ -67,7 +80,7 @@ const Popup = () => {
         </div>
         <div>
           <input type="text" placeholder="Enter keywords" className="border border-gray-300 rounded-lg px-3 py-2 w-full mb-2" value={keywords} onChange={(e) => setKeywords(e.target.value)} />
-          <FileInput onUpload={()=>handleMediaUpload}  />
+          <FileInput onUpload={handleMediaUpload}  />
         </div>
         
         {/* Bottom buttons */}
@@ -75,7 +88,7 @@ const Popup = () => {
           <Button
             className="m-2 bg-blue-600"
             disabled={isButtonDisabled()} 
-            onClick={handleCreatePost}
+            onClick={share}
           >
             Create Post
           </Button>
