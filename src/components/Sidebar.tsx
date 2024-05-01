@@ -181,7 +181,7 @@ const Sidebar: React.FC<Props> = ({
           className={`${
             active === "Settings" ? onSelectStyle : ""
           } flex justify-start items-center p-3 mx-2 hover:cursor-pointer`}
-          onClick={() => router.push("/account/settings")}
+          onClick={() => router.push("/account")}
         >
           <Settings size={20} />
           <span className={`text-xl px-2 ${collapsed ? "hidden" : ""}`}>

@@ -77,40 +77,57 @@ export default function Footer() {
             </div>
           </div>
           <div className="">
-            <div>Follow us</div>
-            <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
-              <a
-                href="https://twitter.com/social-sphere"
-                target="_blank"
-                rel="noopener"
-              >
-                <span className="sr-only">Twitter</span>
-                <Twitter />
-              </a>
-              <a
-                href="https://facebook.com/social-sphere"
-                target="_blank"
-                rel="noopener"
-              >
-                <span className="sr-only">Facebook</span>
-                <Facebook />
-              </a>
-              <a
-                href="https://instagram.com/social-sphere"
-                target="_blank"
-                rel="noopener"
-              >
-                <span className="sr-only">Instagram</span>
-                <Instagram />
-              </a>
-              <a
-                href="https://linkedin.com/social-sphere"
-                target="_blank"
-                rel="noopener"
-              >
-                <span className="sr-only">Linkedin</span>
-                <Linkedin />
-              </a>
+            <div>
+              <div>Follow us</div>
+              <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
+                <a
+                  href="https://twitter.com/social-sphere"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span className="sr-only">Twitter</span>
+                  <Twitter />
+                </a>
+                <a
+                  href="https://facebook.com/social-sphere"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span className="sr-only">Facebook</span>
+                  <Facebook />
+                </a>
+                <a
+                  href="https://instagram.com/social-sphere"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span className="sr-only">Instagram</span>
+                  <Instagram />
+                </a>
+                <a
+                  href="https://linkedin.com/social-sphere"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span className="sr-only">Linkedin</span>
+                  <Linkedin />
+                </a>
+              </div>
+            </div>
+            <div>
+              <div className="mt-5 text-gray-400 dark:text-gray-500">
+                <span>Subscribe to our newsletter</span>
+                <div className="mt-2">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-2 text-gray-700 bg-gray-100 border-none rounded-md dark:bg-trueGray-800 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <button className="px-4 py-2 mt-2 text-white bg-indigo-500 rounded-md">
+                    Subscribe
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
