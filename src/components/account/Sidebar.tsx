@@ -9,14 +9,14 @@ const Sidebar = ({ className, setPage, selectedPage }: any) => {
     <div
       className={cn(
         className,
-        " fixed w-40 bg-stone-800 text-white dark:bg-zinc-800 dark:text-white"
+        " fixed w-56 bg-stone-800 text-white dark:bg-zinc-800 dark:text-white"
       )}
     >
-      <h1 className="lg:text-xl text-center">Settings</h1>
-      <ul className="list-none">
+      <h1 className="lg:text-xl pl-2">Settings</h1>
+      <ul className="flex flex-col">
         <li
           onClick={() => setPage("Account")}
-          className={`flex hover:cursor-pointer justify-center px-3 py-2 items-center 
+          className={`w-[210px] flex hover:cursor-pointer justify-center px-3 py-2 items-center p-5 m-2 
           ${selectedPage === "Account" && onSelectStyle}`}
         >
           <MdOutlineManageAccounts className="mr-2" size={25} />
@@ -24,7 +24,7 @@ const Sidebar = ({ className, setPage, selectedPage }: any) => {
         </li>
         <li
           onClick={() => setPage("Channels")}
-          className={`flex hover:cursor-pointer justify-center px-3 py-2 items-center 
+          className={`w-[210px] flex hover:cursor-pointer justify-center px-3 py-2 items-center p-5 m-2 
           ${selectedPage === "Channels" && onSelectStyle}`}
         >
           <IoGrid className="mr-2" size={25} />
