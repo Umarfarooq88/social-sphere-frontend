@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { lineChartData } from "./data";
+import { cn } from "@/lib/utils/utils";
 
 ChartJS.register(
   CategoryScale,
@@ -21,7 +22,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-const LineGraph = () => {
+const LineGraph = ({ className }: { className?: string }) => {
   const options = {
     responsive: true,
     plugins: {
@@ -30,12 +31,16 @@ const LineGraph = () => {
       },
       title: {
         display: true,
-        text: "This is the user growth chart gained by using social sphere",
+        text: "Overall Analytics",
       },
     },
   };
   return (
-    <Line data={lineChartData} options={options} className="w-full h-screen" />
+    <Line
+      data={lineChartData}
+      options={options}
+      className={cn("w-full", className)}
+    />
   );
 };
 

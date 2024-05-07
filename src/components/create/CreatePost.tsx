@@ -1,132 +1,42 @@
-"use client";
 import React, { useState } from "react";
-import api from "@/lib/utils/api";
-import FileInput from "./FileInput";
-import { Button } from "../ui/button";
-import { Textarea } from "../ui/textarea";
 import { AiOutlineClose } from "react-icons/ai";
-import Assistant from "../Assistant";
-import { useToast } from "@/components/ui/use-toast";
 import { BeatLoader } from "react-spinners";
+import Assistant from "../Assistant";
+import LinkedInPost from "./LinkedInPost";
+import { Button } from "../ui/button";
+import api from "@/lib/utils/api";
 
 type ToggleFunction = () => void;
 
-interface Props {
+type Props = {
   toggle: ToggleFunction;
-}
+};
 
-const CreatePost: React.FC<Props> = ({ toggle }) => {
-  const { toast } = useToast();
-
-  const [textareaValue, setTextareaValue] = useState("");
-  const [mediaUploaded, setMediaUploaded] = useState(false);
-  const [assistantView, setAssistantView] = useState(false);
-  const [visibility, setVisibility] = useState("PUBLIC");
+const CreatePost = ({ toggle }: Props) => {
   const [submitting, setSubmitting] = useState(false);
+  const [assistantView, setAssistantView] = useState(false);
+  const [platform, setPlatform] = useState("");
 
-  const handleTextareaChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
+  const handlePlatformChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setTextareaValue(event.target.value);
+    setPlatform(event.target.value);
   };
 
-  const isButtonDisabled = (): boolean => {
-    return textareaValue.length === 0;
+  const handleYoutubeAuthorize = () => {
+    api
+      .post("/youtube/auth", {
+        scope: "https://www.googleapis.com/auth/youtube.upload",
+        index: 2,
+      })
+      .then((response) => {
+        console.log(response.data);
+        const authUrl = response.data.data;
+        window.location.href = authUrl;
+      });
   };
-
-  const shareNow = async () => {
-    try {
-      setSubmitting(true);
-      if (textareaValue && !mediaUploaded) {
-        setTextareaValue("");
-        await createTextShare();
-      } else if (textareaValue && mediaUploaded) {
-        setTextareaValue("");
-        await handleImageVideoUpload();
-      } else {
-        console.log("Cannot create share with empty content");
-      }
-    } catch (error) {
-      console.error("Error creating LinkedIn post:", error);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const createTextShare = async () => {
-    try {
-      const requestBody = {
-        content: textareaValue,
-        visibility: visibility,
-      };
-
-      const response = await api.post(
-        "linkedIn/publish-textual-post",
-        requestBody
-      );
-
-      if (response.status === 200) {
-        console.log("Text share created:", response.data);
-        toast({
-          title: "Text post created",
-          // description: "Friday, February 10, 2023 at 5:57 PM",
-        });
-      } else {
-        console.error(
-          "Error creating LinkedIn text share:",
-          response.data.error
-        );
-      }
-    } catch (error) {
-      console.error("Error creating LinkedIn text share:", error);
-    }
-  };
-
-  const handleImageVideoUpload = async (files: File[] = []) => {
-    try {
-      if (!files[0]) {
-        console.error("No files provided for upload.");
-        return;
-      } else {
-        setMediaUploaded(true);
-      }
-      const file = files[0];
-      const mediaType = file.type.startsWith("image") ? "image" : "video";
-
-      const formData = new FormData();
-      formData.append("media", file);
-      formData.append("content", textareaValue);
-      formData.append("visibility", visibility);
-      formData.append("mediaType", mediaType);
-
-      const response = await api.post(
-        "linkedIn/publish-complete-post",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        console.log("Complete post published:", response.data);
-      } else {
-        console.error("Error publishing complete post:", response.data.error);
-      }
-    } catch (error) {
-      console.error("Error publishing complete post:", error);
-    }
-  };
-
-  const schedulePost = () => {
-    console.log("Schedule Post button clicked");
-  };
-
   return (
-    <div
-      className={`fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50`}
-    >
+    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
       {submitting && (
         <div className="absolute flex justify-center items-center z-50">
           <BeatLoader color="white" />
@@ -144,52 +54,31 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
         </div>
       )}
       <div className="bg-white dark:bg-black p-8 w-1/2 h-auto rounded-lg">
-        <div className="flex justify-between mb-4">
-          <h2 className="text-lg font-bold">Create Post</h2>
+        <div className="flex justify-between ">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-bold mr-2">Create Post</h2>
+            {/* Use onChange event to handle platform selection */}
+            <select
+              className="p-1 rounded-md border border-gray-300"
+              value={platform}
+              onChange={handlePlatformChange}
+            >
+              <option value="">Select Platform</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="YouTube">YouTube</option>
+            </select>
+          </div>
           <button className="text-3xl font-bold" onClick={toggle}>
             <AiOutlineClose />
           </button>
         </div>
-        <div className="relative">
-          <Textarea
-            placeholder="Start writing or"
-            className="border border-gray-300 rounded-lg px-3 py-2 w-full mb-2"
-            rows={20}
-            cols={50}
-            value={textareaValue}
-            onChange={handleTextareaChange}
-          ></Textarea>
-          {!textareaValue && (
-            <Button
-              onClick={() => setAssistantView(!assistantView)}
-              className="absolute top-1 left-36  px-3 py-1 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg opacity-50 hover:opacity-100"
-            >
-              Use the AI Assistant
-            </Button>
-          )}
-        </div>
-        <div className="flex space-x-5">
-          <h3 className="bold">Visibility</h3>
-          <select
-            className="outline-none  border rounded-lg"
-            value={visibility}
-            onChange={(e) => setVisibility(e.target.value)}
-          >
-            <option value="PUBLIC">Public</option>
-            <option value="CONNECTIONS">Connections</option>
-          </select>
-        </div>
-        <div>
-          <FileInput onUpload={handleImageVideoUpload} />
-        </div>
-        <div className="flex space-x-5 justify-end p-2">
-          <Button disabled={isButtonDisabled()}>Save as draft</Button>
-          <Button onClick={schedulePost} disabled={isButtonDisabled()}>
-            Schedule Post
-          </Button>
-          <Button onClick={shareNow} disabled={isButtonDisabled()}>
-            Share Now
-          </Button>
+        {/* Render corresponding post component based on selected platform */}
+        <div className="">
+          {platform === "LinkedIn" ? (
+            <LinkedInPost toggle={toggle} />
+          ) : platform === "YouTube" ? (
+            <YoutubeAuthorizeButton index="2" />
+          ) : null}
         </div>
       </div>
     </div>
@@ -197,3 +86,19 @@ const CreatePost: React.FC<Props> = ({ toggle }) => {
 };
 
 export default CreatePost;
+
+export const YoutubeAuthorizeButton = ({ index }: { index: string }) => {
+  const handleYoutubeAuthorize = () => {
+    api
+      .post("/youtube/auth", {
+        scope: "https://www.googleapis.com/auth/youtube.upload",
+        index: index,
+      })
+      .then((response) => {
+        console.log(response.data);
+        const authUrl = response.data.data;
+        window.location.href = authUrl;
+      });
+  };
+  return <Button onClick={handleYoutubeAuthorize}>Authorize</Button>;
+};

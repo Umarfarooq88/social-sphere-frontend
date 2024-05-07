@@ -40,7 +40,19 @@ const Sidebar: React.FC<Props> = ({
   const [channels, setChannels] = useState([] as Channel[]);
   const router = useRouter();
   const [active, setActive] = useState<string>("Create");
-
+  const uniqueChannels: Channel[] = Object.values(channels).reduce(
+    (accumulator: Channel[], channel: Channel) => {
+      // Check if the channel name is not already in the accumulator array
+      if (
+        !accumulator.some((item) => item.channelName === channel.channelName)
+      ) {
+        // If it's not, add it to the accumulator array
+        accumulator.push(channel);
+      }
+      return accumulator;
+    },
+    [] as Channel[]
+  );
   const handleActive = (name: string) => {
     setActive(name);
     setActiveScreen(name);
@@ -118,7 +130,7 @@ const Sidebar: React.FC<Props> = ({
         <div className="flex flex-col justify-center items-center p-5">
           <GrChannel />
           <div className="p-5 hover:cursor-pointer">
-            {channels.map((item) => {
+            {uniqueChannels.map((item) => {
               switch (item.channelName) {
                 case "LinkedIn":
                   return <FaLinkedin color="blue" size={25} />;
@@ -141,7 +153,7 @@ const Sidebar: React.FC<Props> = ({
                     <span>{"No channels connected yet"}</span>
                   </div>
                 ) : (
-                  channels.map((item, index) => (
+                  uniqueChannels.map((item, index) => (
                     <li key={index} className="">
                       {loading ? (
                         <div className="flex justify-start items-center my-5">
