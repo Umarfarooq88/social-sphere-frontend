@@ -28,7 +28,7 @@ const Assistant = ({ toggle, setPromptText }: AssistantProps) => {
       .then((text) => {
         setPrompt("");
         setLoading(false);
-        setAiText(text);
+        setAiText(text || ""); // Ensure text is always a string
       })
       .catch((err) => {
         console.log(err);
