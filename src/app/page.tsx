@@ -15,6 +15,7 @@ import Faq from "../components/landing-page/faq";
 import { FollowerPointerCard } from "@/components/ui/following-pointer";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import Team from "@/components/landing-page/team";
+import PricingCards from "@/components/landing-page/pricingCards";
 
 const Home = () => {
   return (

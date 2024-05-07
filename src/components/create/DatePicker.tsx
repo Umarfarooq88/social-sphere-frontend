@@ -1,7 +1,7 @@
 import * as React from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format, parseISO } from "date-fns"; // Import parseISO function for parsing ISO date strings
-import { DateRange } from "react-day-picker";
+import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 
 import { cn } from "@/lib/utils/utils";
 import { Button } from "@/components/ui/button";
@@ -28,16 +28,18 @@ export function DatePicker({
   className,
 }: DatePickerProps) {
   const [date, setDate] = React.useState<DateRange | undefined>({
-    from: parseISO(startDate), // Parse startDate to Date object
-    to: parseISO(endDate), // Parse endDate to Date object
+    from: parseISO(startDate) || "", // Parse startDate to Date object or provide an empty string as default
+    to: parseISO(endDate) || "", // Parse endDate to Date object or provide an empty string as default
   });
 
-  const handleDateSelect = (selectedDate: DateRange) => {
-    const { from, to } = selectedDate;
-    setDate({ from, to });
-    // Format selected dates to "year-month-day" format before setting them
-    setStartDate(format(from || "", "yyyy-MM-dd")); // Provide a default value of an empty string for 'from'
-    setEndDate(format(to || "", "yyyy-MM-dd")); // Provide a default value of an empty string for 'to'
+  const handleDateSelect: SelectRangeEventHandler = (selectedDate) => {
+    if (selectedDate) {
+      const { from, to } = selectedDate;
+      setDate(selectedDate);
+      // Format selected dates to "year-month-day" format before setting them
+      setStartDate(format(from || "", "yyyy-MM-dd")); // Provide an empty string as default if from is undefined
+      setEndDate(format(to || "", "yyyy-MM-dd")); // Provide an empty string as default if to is undefined
+    }
   };
 
   return (
@@ -57,7 +59,6 @@ export function DatePicker({
               date.to ? (
                 <>
                   {format(date.from, "LLL dd, yyyy")} -{" "}
-                  {/* Use "yyyy" for 4-digit year */}
                   {format(date.to, "LLL dd, yyyy")}
                 </>
               ) : (
