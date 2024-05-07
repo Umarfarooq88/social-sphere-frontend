@@ -24,29 +24,30 @@ const barChartData = {
 
 const lineChartData = {
     labels: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
     ],
     datasets: [
       {
         label: "Views",
-        data: [3000, 5000, 6000, 6500, 1500, 2000, 3000, 7000],
+        data: [0, 2, 5, 7, 16, 20, 30, 35],
         borderColor: "rgba(75, 192, 192, 1)",
       },
       {
-        label: "Clicks",
-        data: [1500, 2500, 2600, 650, 1500, 2000, 3000, 1200],
+        label: "Likes",
+        data: [0, 5, 11, 19, 24, 27, 33, 40],
         borderColor: "rgba(75, 192, 192, 192)",
       },
       {
-        label: "Sales",
-        data: [3000, 5000, 6000, 6500, 1500, 200, 2400, 6500],
-        borderColor: "rgba(0, 192, 192, 0)",
+        label: "Impressions",
+        data: [0, 9, 12, 15, 18, 25, 30, 33],
+        borderColor: "rgba(0, 192, 65, 1)",
       },
     ],
 };

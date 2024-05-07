@@ -21,6 +21,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import Assistant from "../Assistant";
 import { FaWandMagicSparkles } from "react-icons/fa6";
 import Spinner from "../Spinner";
+import { useToast } from "../ui/use-toast";
 type CreateIdeaViewProps = {
   toggle: () => void;
 };
@@ -34,7 +35,8 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
   const [mediaUploaded, setMediaUploaded] = useState<boolean>(false);
   const [assistantView, setAssistantView] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
-  const [alert, setAlert] = useState<alertType>();
+  const { toast } = useToast();
+
   const handleMediaUpload = (files: File[]) => {
     setFiles(files);
     setMediaUploaded(true);
@@ -64,9 +66,10 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
         setTextContent("");
         setMediaUploaded(false);
         setFiles([]);
-        setAlert({
-          alert: "Success",
-          alertMessage: "Idea saved successfully",
+        toast({
+          variant: "default",
+          title: "Idea saved successfully",
+          description: "Your idea has been saved successfully",
         });
         setTimeout(() => {
           toggle();
@@ -74,9 +77,10 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
       }
       console.log("Response received: ", response);
     } catch (error) {
-      setAlert({
-        alert: "Failure",
-        alertMessage: "Failed to save the idea. Please try again later.",
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to save the idea. Please try again later.",
       });
       console.log(error);
     } finally {
@@ -85,21 +89,6 @@ const CreateIdeaView = ({ toggle }: CreateIdeaViewProps) => {
   };
   return (
     <div className="fixed flex justify-between items-center inset-0 z-50 bg-gray-200 bg-opacity-75 overflow-auto md:p-8">
-      {alert && (
-        <div className="fixed flex justify-center items-center  top-6 lg:left-40 lg:right-40">
-          <Alert
-            className={`${
-              alert?.alert === "Success"
-                ? "border border-green-500 text-green-500"
-                : "border border-red-500 text-red-500"
-            } p-5 w-96 rounded-xl top-0 z-auto`}
-          >
-            <Terminal className="h-4 w-4" />
-            <AlertTitle>Heads up!</AlertTitle>
-            <AlertDescription>{alert?.alertMessage}</AlertDescription>
-          </Alert>
-        </div>
-      )}
       {assistantView && (
         <div className="p-5 h-screen relative">
           <Assistant toggle={setAssistantView} setPromptText={setTextContent} />

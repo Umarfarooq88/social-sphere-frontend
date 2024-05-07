@@ -13,8 +13,8 @@ const Card = ({ icon, title, number, className }: any) => {
         {/* Icons */}
         {icon}
       </div>
-      <div className="flex flex-col justify-between items-start">
-        <div className="text-md font-extralight text-black dark:text-white">
+      <div className="flex m-5 flex-col justify-between items-start">
+        <div className="text-md font-extrabold text-black dark:text-white">
           {/* Title */}
           {title}
         </div>
