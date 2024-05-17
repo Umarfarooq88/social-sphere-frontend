@@ -23,11 +23,11 @@ const formSchema = z
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be less than 100 characters"),
+      .max(20, "Password must be less than 20 characters"),
     confirmPassword: z
       .string()
       .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be less than 100 characters"),
+      .max(20, "Password must be less than 20 characters"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -74,22 +74,30 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <p className="lg:text-4xl underline space-y-10 ">Sign Up</p>
-      <div className="flex flex-col justify-center gap-10">
+    <div className="flex flex-col justify-center items-center h-screen bg-white dark:bg-black p-4 sm:p-6 lg:p-8">
+      <p className="lg:text-4xl text-2xl font-semibold underline mb-6 text-black dark:text-white">
+        Sign Up
+      </p>
+      <div className="flex flex-col justify-center w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-2 w-full items-center"
+            className="flex flex-col gap-4"
           >
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-black dark:text-white">
+                    Email
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="example@email.com" {...field} />
+                    <Input
+                      placeholder="example@email.com"
+                      {...field}
+                      className="border border-gray-300 rounded-md p-2"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,12 +108,15 @@ const Page = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-black dark:text-white">
+                    Password
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Enter your password"
                       type="password"
                       {...field}
+                      className="border border-gray-300 rounded-md p-2"
                     />
                   </FormControl>
                   <FormMessage />
@@ -117,23 +128,31 @@ const Page = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="text-black dark:text-white">
+                    Confirm Password
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Enter your password again"
                       type="password"
                       {...field}
+                      className="border border-gray-300 rounded-md p-2"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
-            <div className="p-2">
-              <p className="text-center text-sm">
+            <Button
+              type="submit"
+              className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300"
+            >
+              Submit
+            </Button>
+            <div className="pt-4">
+              <p className="text-center text-sm text-black dark:text-white">
                 {"Already have an account? "}
-                <a href="/sign-in" className="text-blue-500">
+                <a href="/sign-in" className="text-blue-500 underline">
                   Sign In
                 </a>
               </p>
