@@ -19,6 +19,7 @@ import { Terminal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { login } from "@/lib/redux/features/userSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -33,8 +34,7 @@ type FormData = z.infer<typeof formSchema>;
 const Page = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [error, setError] = React.useState<string | null>(null);
-  const [success, setSuccess] = React.useState<string | null>(null);
+  const { toast } = useToast();
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -45,8 +45,6 @@ const Page = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
-    setSuccess(null);
-    setError(null);
     setSubmitting(true);
     try {
       const url: string =
@@ -73,13 +71,20 @@ const Page = () => {
         })
       );
       if (response.status === 200) {
-        setSuccess("You have successfully logged in");
+        toast({
+          title: "Success",
+          description: "You have successfully logged in",
+        });
         setTimeout(() => {
           router.push("/publish");
         }, 1000);
       }
     } catch (err) {
-      setError("Invalid credentials, Retry with correct credentials");
+      toast({
+        title: "Error",
+        description: "Invalid credentials, Retry with correct credentials",
+        variant: "destructive",
+      });
     }
     setSubmitting(false);
   };
@@ -136,6 +141,7 @@ const Page = () => {
             <Button
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300"
+              disabled={submitting}
             >
               Sign In
             </Button>
