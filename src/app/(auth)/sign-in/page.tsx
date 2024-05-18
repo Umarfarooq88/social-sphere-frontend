@@ -19,6 +19,7 @@ import { Terminal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { login } from "@/lib/redux/features/userSlice";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -33,8 +34,7 @@ type FormData = z.infer<typeof formSchema>;
 const Page = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [error, setError] = React.useState<string | null>(null);
-  const [success, setSuccess] = React.useState<string | null>(null);
+  const { toast } = useToast();
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -45,8 +45,6 @@ const Page = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
-    setSuccess(null);
-    setError(null);
     setSubmitting(true);
     try {
       const url: string =
@@ -73,83 +71,91 @@ const Page = () => {
         })
       );
       if (response.status === 200) {
-        setSuccess("You have successfully logged in");
+        toast({
+          title: "Success",
+          description: "You have successfully logged in",
+        });
         setTimeout(() => {
           router.push("/publish");
         }, 1000);
       }
     } catch (err) {
-      setError("Invalid credentials, Retry with correct credentials");
+      toast({
+        title: "Error",
+        description: "Invalid credentials, Retry with correct credentials",
+        variant: "destructive",
+      });
     }
     setSubmitting(false);
   };
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <p className="lg:text-3xl underline">Sign In</p>
-      <Form {...form}>
-        <div className="p-4">
-          {error && (
-            <Alert variant="destructive">
-              <Terminal className="h-4 w-4" />
-              <AlertTitle>Login Failed</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-          {success && (
-            <Alert className="border border-green-500">
-              <Terminal className="h-4 w-4" />
-              <AlertTitle>Success!</AlertTitle>
-              <AlertDescription>{success}</AlertDescription>
-            </Alert>
-          )}
-        </div>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-2 items-center "
-        >
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="example@email.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your password"
-                    type="password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" disabled={submitting} className="w-full">
-            Sign In
-          </Button>
-        </form>
-        <div className="p-2">
-          <p className="text-center text-sm">
-            {"Don't have an account? "}
-            <a href="/sign-up" className="text-blue-500">
-              Sign Up
-            </a>
-          </p>
-        </div>
-      </Form>
+    <div className="flex flex-col justify-center items-center h-screen bg-white dark:bg-black p-4 sm:p-6 lg:p-8">
+      <p className="lg:text-4xl text-2xl font-semibold underline mb-6 text-black dark:text-white">
+        Sign In
+      </p>
+      <div className="flex flex-col justify-center w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black dark:text-white">
+                    Email
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="example@email.com"
+                      {...field}
+                      className="border border-gray-300 rounded-md p-2"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black dark:text-white">
+                    Password
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your password"
+                      type="password"
+                      {...field}
+                      className="border border-gray-300 rounded-md p-2"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300"
+              disabled={submitting}
+            >
+              Sign In
+            </Button>
+            <div className="pt-4">
+              <p className="text-center text-sm text-black dark:text-white">
+                {"Don't have an account? "}
+                <a href="/sign-up" className="text-blue-500 underline">
+                  Sign Up
+                </a>
+              </p>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };
