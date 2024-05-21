@@ -38,10 +38,10 @@ const Page = () => {
     }
   };
 
+  const checkUser = async () => {
+    isUserLoggedIn();
+  };
   useEffect(() => {
-    const checkUser = async () => {
-      isUserLoggedIn();
-    };
     checkUser();
 
     const urlParams = new URLSearchParams(window.location.search);
