@@ -57,8 +57,8 @@ const Page = () => {
       // Set the codeExchanged flag to true to prevent further processing
       setCodeExchanged(true);
       exchangeAuthorizationCodeForToken(authorizationCode, returnedState);
-      // window.history.replaceState({}, document.title, window.location.pathname);
-      // router.push("/publish");
+      window.history.replaceState({}, document.title, window.location.pathname);
+      router.push("/publish");
     }
 
     // Check if channel has been created already
