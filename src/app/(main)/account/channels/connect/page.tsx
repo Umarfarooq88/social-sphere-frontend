@@ -58,7 +58,7 @@ const Page = () => {
       setCodeExchanged(true);
       exchangeAuthorizationCodeForToken(authorizationCode, returnedState);
       window.history.replaceState({}, document.title, window.location.pathname);
-      router.push("/publish");
+      // router.push("/publish");
     }
 
     // Check if channel has been created already
