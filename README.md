@@ -16,7 +16,7 @@ Social Sphere simplifies your social media management, making it easier to stay 
 
 ## Live Demo
 
-Check out the live website: [Social Sphere Live](https://your-live-website-url.com)
+Check out the live website: [Social Sphere Live](https://social-sphere-frontend.vercel.app/)
 
 Watch our demo video: [Social Sphere Demo Video](https://youtu.be/9FuuCVTfQ7A?si=kQQQgAZXiuiL3H4-)
 
