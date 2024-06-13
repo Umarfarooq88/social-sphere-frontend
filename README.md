@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Social Sphere
 
-## Getting Started
+Welcome to **Social Sphere**, a powerful web app designed to streamline the management of your social media accounts, specifically LinkedIn and YouTube. With Social Sphere, you can effortlessly manage your content and stay organized, enhancing your social media efficiency and impact.
 
-First, run the development server:
+## Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **User Registration and Sign-In**: Easily create an account and sign in to access your dashboard.
+- **Idea Management**: Create, store, and manage your ideas. Post your ideas directly to LinkedIn, complete with video or audio attachments.
+- **Account Integration**: Seamlessly connect your LinkedIn and YouTube accounts to Social Sphere.
+- **LinkedIn Posting**: Post your ideas directly to LinkedIn with accompanying media files.
+- **YouTube Uploads**: Upload videos to YouTube along with detailed descriptions.
+- **Analytics Dashboard**: View comprehensive analytics from your YouTube channel directly within Social Sphere.
+- **Profile Editing**: Edit and update your profiles on both Social Sphere and LinkedIn.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Social Sphere simplifies your social media management, making it easier to stay organized and efficient.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Live Demo
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Check out the live website: [Social Sphere Live](https://social-sphere-frontend.vercel.app/)
 
-## Learn More
+Watch our demo video: [Social Sphere Demo Video](https://youtu.be/9FuuCVTfQ7A?si=kQQQgAZXiuiL3H4-)
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Register and Sign In**: Create an account and sign in to access your personalized dashboard.
+2. **Integrate Accounts**: Connect your LinkedIn and YouTube accounts to Social Sphere for seamless management.
+3. **Manage Ideas**: Create and store your content ideas. Easily post them to LinkedIn with media attachments.
+4. **Upload to YouTube**: Upload your videos directly to your YouTube channel with detailed descriptions.
+5. **View Analytics**: Access comprehensive analytics of your YouTube channel directly from the Social Sphere dashboard.
+6. **Edit Profiles**: Update and manage your profiles on both Social Sphere and LinkedIn.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For any inquiries, please reach out to us at musttsum24@gmail.com
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+Thank you for choosing Social Sphere! We hope it enhances your social media management experience.
+
+---
+
